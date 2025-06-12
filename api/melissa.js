@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "No API key provided" });
   }
 
-  const { message } = req.body;
+  const { messages } = req.body;
 
   try {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -19,23 +19,15 @@ export default async function handler(req, res) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "gpt-4", // или "gpt-3.5-turbo" для экономии
-        messages: [
-          { role: "system", content: "Ты — Мелисса, умная, озорная, немного ироничная AI-помощница." },
-          { role: "user", content: message }
-        ],
+        model: "gpt-3.5-turbo",
+        messages,
         temperature: 0.7,
-        max_tokens: 1000,
+        max_tokens: 300,
       }),
     });
 
     const data = await response.json();
-
-    if (data.error) {
-      return res.status(500).json({ error: data.error.message });
-    }
-
-    return res.status(200).json({ reply: data.choices[0].message.content });
+    return res.status(200).json(data);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong" });
