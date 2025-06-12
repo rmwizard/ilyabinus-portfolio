@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/chat", methods=["POST"])
+@app.route("/api/melissa", methods=["POST"])
 def chat():
     try:
         data = request.get_json()
