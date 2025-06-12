@@ -655,21 +655,19 @@
              scrollLatestToTop();
            });
          
-           history.push({ role: "user", content: message });
-         
-           const botMessage = document.createElement("div");
-           chatbox.appendChild(botMessage);
-         
-           try {
-             const res = await fetch("https://ilyabinus-portfolio.vercel.app/api/melissa", {
-               method: "POST",
-               headers: { "Content-Type": "application/json" },
-               body: JSON.stringify({ messages: history }),
-             });
-             const data = await res.json();
-         
-             const reply = data.choices[0].message.content;
-             history.push({ role: "assistant", content: reply });
+            const botMessage = document.createElement("div");
+            chatbox.appendChild(botMessage);
+            
+            try {
+              const res = await fetch("https://ilyabinus-portfolio.vercel.app/api/melissa", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: message }),
+              });
+            
+              const data = await res.json();
+              const reply = data.reply;
+
          
              setTimeout(() => {
                const melissaBlock = document.createElement("div");
