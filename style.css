@@ -1,0 +1,211 @@
+/* === style.css === */
+
+/* Карточка и анимация раскрытия */
+.card {
+  max-height: 550px;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.card.expanded {
+  max-height: 2000px;
+}
+
+.more-desc, .toggle-content {
+  display: none;
+}
+
+.card.expanded .more-desc, .card.expanded .toggle-content {
+  display: block;
+}
+
+/* Иконка погоды */
+#weather-icon {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+  filter: invert(91%) sepia(25%) saturate(791%) hue-rotate(358deg) brightness(83%) contrast(98%);
+}
+
+/* Анимация бургер-меню */
+.open .top-line,
+.open .bottom-line {
+  opacity: 0;
+}
+
+.open .mid1-line {
+  transform: rotate(45deg);
+}
+
+.open .mid2-line {
+  transform: rotate(-45deg);
+}
+
+/* Отключение курсора на тексте */
+p, span, li, h1, h2, h3, h4, h5, h6 {
+  cursor: default;
+}
+
+/* Свечение лампочки */
+.glow {
+  filter: drop-shadow(0 0 6px #f7d86a);
+  transition: filter 0.3s ease;
+}
+
+/* Анимации появления текста */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.delay-\[200ms\] {
+  animation-delay: 0.2s;
+}
+
+.delay-\[400ms\] {
+  animation-delay: 0.4s;
+}
+
+.delay-\[600ms\] {
+  animation-delay: 0.6s;
+}
+
+.delay-\[800ms\] {
+  animation-delay: 0.8s;
+}
+
+/* Scrollbar скрытие */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Базовые стили для кнопок управления */
+.control-button {
+  font-size: 24px;
+  color: #f7d86a;
+}
+
+.mobile-controls {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobile-controls button {
+  padding: 10px 20px;
+  background-color: #444;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 0 4px #222;
+}
+
+#controls button {
+  width: 56px;
+  height: 56px;
+  background: #333;
+  border: 1px solid #f7d86a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+}
+
+/* Стили для текста в модальном окне */
+.modal-text {
+  white-space: normal !important;
+  word-break: break-word !important;
+  display: block !important;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+#startBtn:active {
+  transform: scale(0.95);
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.retro-text {
+  text-shadow:
+    1px 1px 0 #000,
+    2px 2px 0 #000,
+    3px 3px 0 #333;
+}
+
+#chatbox::-webkit-scrollbar {
+  width: 6px;
+}
+#chatbox::-webkit-scrollbar-thumb {
+  background-color: #f7d86a;
+  border-radius: 10px;
+}
+#chatbox::-webkit-scrollbar-track {
+  background-color: #222;
+}
+
+html, body {
+  scrollbar-width: none;           /* Firefox */
+  -ms-overflow-style: none;        /* IE, Edge */
+  overflow-y: scroll;              /* оставляет прокрутку, но без прыжков */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;                   /* Chrome, Safari */
+}
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.message-melissa {
+  animation: slideInLeft 0.4s ease-out;
+}
+
+.message-user {
+  animation: slideInRight 0.4s ease-out;
+}
+
+#chatbox {
+  overflow-x: hidden;
+  box-sizing: border-box;
+  padding-right: 8px; /* чтобы скролл не вылазил внутрь контента */
+}

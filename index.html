@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <link rel="icon" type="image/png" href="images/favicon.png">
+      <link href="style.css" rel="stylesheet">
+      <link href="assets/css/qweather-icons.css" rel="stylesheet">
+      <meta charset="utf-8">
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+      <title>ilya binus.dev</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <script>
+         tailwind.config = {
+           theme: {
+             screens: {
+               sm: "1080px",
+               md: "1280px",
+               lg: "1536px"
+             },
+             extend: {
+               colors: {
+                 dark: "#272627",
+                 light: "#f7d86a",
+                 background: "#f7f7f7",
+                 foreground: "#272627"
+               },
+               fontFamily: {
+                 sans: ["Inter", "sans-serif"]
+               }
+             }
+           }
+         };
+      </script>
+      <style>
+         html {
+         scroll-behavior: smooth;
+         }
+      </style>
+   </head>
+   <body class="bg-repeat bg-[length:200px_200px] min-h-screen flex flex-col bg-[#272627] text-[#f7d86a] font-sans">
+      <!-- Header -->
+      <header class="bg-gradient-to-l from-[#333333] via-[#444444] to-[#333333] p-6 border-b border-[#f7d86a] fixed top-0 left-0 right-0 z-50">
+         <div class="max-w-6xl mx-auto flex items-center justify-between px-6">
+            <!-- Left side: Logo -->
+            <div class="flex items-center gap-2">
+               <h1 class="text-2xl font-bold flex items-center gap-2 group">
+                  <svg class="text-[#f7d86a] transition duration-300 group-hover:drop-shadow-[0_0_8px_#f7d86a]" fill="none" height="24" id="lightbulb" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                     <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                     <path d="M9 18h6"></path>
+                     <path d="M10 22h4"></path>
+                  </svg>
+                  ilyabinus.dev
+               </h1>
+            </div>
+            <!-- Icons -->
+            <div class="hidden sm:flex gap-8 items-center justify-center ml-4 mr-4">
+               <img alt="Python" class="h-10 w-auto opacity-80 hover:opacity-100 transition" src="images/skill_icons/python_logo.png">
+               <img alt="JS" class="h-10 w-auto opacity-80 hover:opacity-100 transition" src="images/skill_icons/js_logo.png">
+               <img alt="Json" class="h-10 w-auto opacity-80 hover:opacity-100 transition" src="images/skill_icons/tailwind_logo.png">
+               <img alt="HTML5" class="h-10 w-auto opacity-80 hover:opacity-100 transition" src="images/skill_icons/html5_logo.png">
+               <img alt="CSS3" class="h-10 w-auto opacity-80 hover:opacity-100 transition" src="images/skill_icons/css_icon.png">
+               <img alt="Adobe" class="h-10 w-auto opacity-80 hover:opacity-100 transition" src="images/skill_icons/adobe_logo.png">
+               <img alt="Git" class="h-10 w-auto opacity-80 hover:opacity-100 transition" src="images/skill_icons/git_logo.png">
+               <img alt="AI tools" class="h-10 w-auto opacity-80 hover:opacity-100 transition" src="images/skill_icons/ai_logo.png">
+            </div>
+            <!-- Right side: menu -->
+            <nav class="hidden sm:flex gap-6 text-[#f7d86a] items-center">
+               <a class="hover:underline" href="#about">about</a>
+               <span>|</span>
+               <a class="hover:underline" href="#project-list">projects</a>
+               <span>|</span>
+               <a class="hover:underline" href="#contact">contact</a>
+            </nav>
+            <!-- Burger -->
+            <button class="sm:hidden relative w-8 h-8 flex items-center justify-center z-50" id="burger-btn">
+            <span class="top-line absolute w-6 h-0.5 bg-[#f7d86a] top-1 transition-all duration-300"></span>
+            <span class="mid1-line absolute w-6 h-0.5 bg-[#f7d86a] transition-all duration-300 origin-center"></span>
+            <span class="mid2-line absolute w-6 h-0.5 bg-[#f7d86a] transition-all duration-300 origin-center"></span>
+            <span class="bottom-line absolute w-6 h-0.5 bg-[#f7d86a] bottom-1 transition-all duration-300"></span>
+            </button>
+         </div>
+      </header>
+      <nav class="hidden sticky top-[80px] left-0 w-full flex justify-center text-[#f7d86a] font-bold text-lg gap-4 py-4 transition-all duration-300 text-center z-40 bg-[#333333]" id="nav-menu">
+         <a class="hover:underline" href="#about">about</a>
+         <span>|</span>
+         <a class="hover:underline" href="#project-list">projects</a>
+         <span>|</span>
+         <a class="hover:underline" href="#contact">contact</a>
+      </nav>
+      <div class="max-w-6xl mx-auto px-6 mt-4 sm:mt-16 grid grid-cols-1 md:grid-cols-2 gap-10">
+         <!-- Left: About -->
+         <section id="about" class="scroll-mt-32 mt-24 grid grid-cols-[max-content_1fr] gap-x-6 w-max mx-auto md:mx-0 md:w-full text-lg leading-relaxed md:pl-5">
+            <h2 class="sr-only">About</h2>
+            <!-- visually hidden, but SEO-friendly -->
+            <p class="text-right font-bold animate-fade-up delay-[200ms]">who</p>
+            <p class="animate-fade-up delay-[200ms]">ilya binus</p>
+            <p class="text-right font-bold animate-fade-up delay-[400ms]">what</p>
+            <p class="animate-fade-up delay-[400ms]">code &amp; design</p>
+            <p class="text-right font-bold animate-fade-up delay-[600ms]">how</p>
+            <p class="animate-fade-up delay-[600ms]">qualitatively and heartily</p>
+            <p class="text-right font-bold animate-fade-up delay-[800ms]">why</p>
+            <p class="animate-fade-up delay-[800ms]">because i love it</p>
+         </section>
+         <!-- Icons for mobile -->
+         <div class="block sm:hidden mt-0 px-0 py-10 border-y border-[#f7d86a]/30">
+            <div class="grid grid-cols-4 gap-4 justify-items-center">
+               <img alt="Python" class="h-10 w-auto opacity-80" src="images/skill_icons/python_logo.png" title="Python">
+               <img alt="JavaScript" class="h-10 w-auto opacity-80" src="images/skill_icons/js_logo.png" title="JavaScript">
+               <img alt="JSON" class="h-10 w-auto opacity-80" src="images/skill_icons/json_logo.png" title="JSON">
+               <img alt="Git" class="h-10 w-auto opacity-80" src="images/skill_icons/git_logo.png" title="Git">
+               <img alt="HTML5" class="h-10 w-auto opacity-80" src="images/skill_icons/html5_logo.png" title="HTML5">
+               <img alt="CSS3" class="h-10 w-auto opacity-80" src="images/skill_icons/css_icon.png" title="CSS3">
+               <img alt="AI Tools" class="h-10 w-auto opacity-80" src="images/skill_icons/ai_logo.png" title="AI Tools">
+               <img alt="Adobe" class="h-10 w-auto opacity-80" src="images/skill_icons/adobe_logo.png" title="Adobe">
+            </div>
+         </div>
+         <!-- Galery -->
+         <div class="hidden sm:block pt-20 relative w-full max-w-6xl mx-auto flex items-center gap-2 px-6">
+            <div class="relative overflow-hidden max-w-6xl mx-auto">
+               <!-- Shadow left -->
+               <div class="pointer-events-none absolute left-0 top-0 h-full w-12 bg-gradient-to-r from-[#272627] to-transparent z-10"></div>
+               <!-- Galery -->
+               <section class="hidden sm:block relative overflow-hidden px-4" id="gallery-wrapper">
+                  <div class="flex w-max transition-transform duration-700 ease-in-out" id="track">
+                     <!-- Prev 1 -->
+                     <div class="gallery-card w-64 shrink-0 mx-4 bg-gradient-to-br from-[#333] via-[#333] to-[#222] border border-[#f7d86a]/70 rounded-xl p-4">
+                        <h3 class="text-[#f7d86a] text-md font-semibold">Melissa AI Assistant</h3>
+                        <p class="text-sm text-[#f7d86a]/80">Part muse, part machine.<br>Powered by OpenAI API</p>
+                        <p class="text-xs mt-1 text-yellow-400">#JavaScript #Python #Tailwind<br>#GPT #Chatbot #AIUX #Tailwind</p>
+                        <a class="text-yellow-300 text-xs underline hover:no-underline" href="#melissa-project">View Project</a>
+                     </div>
+                     <!-- Prev 2 -->
+                     <div class="gallery-card w-64 shrink-0 mx-4 bg-gradient-to-br from-[#333] via-[#333] to-[#222] border border-[#f7d86a]/70 rounded-xl p-4">
+                        <h3 class="text-[#f7d86a] text-md font-semibold">Password Generator</h3>
+                        <p class="text-sm text-[#f7d86a]/80">JavaScript - based with custom length and character options.</p>
+                        <p class="text-xs mt-1 text-yellow-400">#JavaScript #HTML #Crypto #DOM<br>#PasswordGenerator</p>
+                        <a class="text-yellow-300 text-xs underline hover:no-underline" href="#password-generator">View Project</a>
+                     </div>
+                     <!-- Prev 3 -->
+                     <div class="gallery-card w-64 shrink-0 mx-4 bg-gradient-to-br from-[#333] via-[#333] to-[#222] border border-[#f7d86a]/70 rounded-xl p-4">
+                        <h3 class="text-[#f7d86a] text-md font-semibold">Snake Unlocker</h3>
+                        <p class="text-sm text-[#f7d86a]/80">A retro twist on the classic Snake game. Press START and dive into pixel nostalgia.</p>
+                        <p class="text-xs mt-1 text-yellow-400">#Python #JS #Snake #ArcadeNostalgia</p>
+                        <a class="text-yellow-300 text-xs underline hover:no-underline" href="#snake-game">View Project</a>
+                     </div>
+                     <!-- Prev 4 -->
+                     <div class="gallery-card w-64 shrink-0 mx-4 bg-gradient-to-br from-[#333] via-[#333] to-[#222] border border-[#f7d86a]/70 rounded-xl p-4">
+                        <h3 class="text-[#f7d86a] text-md font-semibold">Columns &amp; Beams Creator</h3>
+                        <p class="text-sm text-[#f7d86a]/80">Automation of profiles insertion in Tekla Structures.</p>
+                        <p class="text-xs mt-1 text-yellow-400">#Python #Tekla Open API<br>#DXF Parsing #OOP</p>
+                        <a class="text-yellow-300 text-xs underline hover:no-underline" href="#cbc-card">View Project</a>
+                     </div>
+                     <!-- Prev 5 -->
+                     <div class="gallery-card w-64 shrink-0 mx-4 bg-gradient-to-br from-[#333] via-[#333] to-[#222] border border-[#f7d86a]/70 rounded-xl p-4">
+                        <h3 class="text-[#f7d86a] text-md font-semibold">Weather Widget</h3>
+                        <p class="text-sm text-[#f7d86a]/80">Real-time weather with a soft UI touch. Shows current conditions, time, and a fun fact of the day.</p>
+                        <p class="text-xs mt-1 text-yellow-400">#JavaScript #HTML #OpenWeatherAPI</p>
+                        <a class="text-yellow-300 text-xs underline hover:no-underline" href="#weather-widget">View Project</a>
+                     </div>
+                     <!-- Prev 6 -->
+                     <div class="gallery-card w-64 shrink-0 mx-4 bg-gradient-to-br from-[#333] via-[#333] to-[#222] border border-[#f7d86a]/70 rounded-xl p-4">
+                        <h3 class="text-[#f7d86a] text-md font-semibold">Palette Generator</h3>
+                        <p class="text-sm text-[#f7d86a]/80">Upload an image and extract a palette of up to 6 colors.</p>
+                        <p class="text-xs mt-1 text-yellow-400">#JavaScript #Python #Tailwind<br>#DesignTools #PaletteGenerator</p>
+                        <a class="text-yellow-300 text-xs underline hover:no-underline" href="#palette-generator">View Project</a>
+                     </div>
+                  </div>
+               </section>
+               <div class="pointer-events-none absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-[#272627] to-transparent z-10"></div>
+            </div>
+         </div>
+      </div>
+      <main class="flex-grow px-6 max-w-6xl mx-auto mt-2">
+         <section id="project-list" class="scroll-mt-32 max-w-6xl mx-auto px-6 mt-10 sm:mt-8">
+            <h2 class="relative text-xl font-bold text-[#f7d86a] mb-6 text-center">
+               Projects
+               <svg class="absolute left-1/2 -translate-x-20 top-1/2 -translate-y-1/2 w-6 h-6 text-[#f7d86a] transition duration-300" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 4h5l2 3h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path>
+                  <path d="M9 18h6"></path>
+                  <path d="M10 22h4"></path>
+               </svg>
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+               <!-- Card 1 CBC-->
+               <section id="cbc-card" class="scroll-mt-24">
+                  <div class="bg-gradient-to-br from-[#444444] via-[#444444] to-[#333333] border-y border-[#f7d86a] card relative overflow-hidden transition-all duration-500 bg-[#333333] border border-[#f7d86a] rounded-xl p-6 text-gold text-lg font-semibold flex flex-col justify-between">
+                     <div class="absolute right-6 top-7 flex flex-col gap-5 w-7 opacity-90 pointer-events-none">
+                        <img alt="Python" src="images/skill_icons/python_logo.png">
+                        <img alt="Json" src="images/skill_icons/dxf_logo.png">
+                        <img alt="Json" src="images/skill_icons/json_logo.png">
+                     </div>
+                     <div>
+                        <h3 class="text-lg font-semibold mb-2 text-[#f7d86a]">
+                           Columns &amp; Beams Creator
+                        </h3>
+                        <p class="text-sm leading-relaxed text-[#f7d86a]">
+                           Automation of profiles<br>
+                           insertion in Tekla Structures.
+                        </p>
+                     </div>
+                     <p class="tracking-wide text-xs text-yellow-400 leading-relaxed font-normal"> 
+                        <br>#Python #Tekla Open API<br> #DXF Parsing #OOP
+                     </p>
+                     <!-- Кликабельная картинка -->
+                     <img alt="z-10 Preview of Columns &amp; Beams Creator UI" class="relative z-10 w-80 h-auto rounded-lg mx-auto mt-8 border border-[#f7d86a] cursor-pointer transition hover:scale-105" onclick="openModal('images/CBC_01.png')" src="images/CBC_01.png">
+                     <!-- Пустой блок -->
+                     <div class="z-0 bg-[#333] pointer-events-none absolute top-[274px] left-0 w-full -translate-y-1/2 border-y border-[#f7d86a]/30 text-sm font-normal leading-snug h-[190px]"></div>
+                     <!-- Начало описания — видно всегда -->
+                     <p class="text-sm text-[#f7d86a]/80 leading-relaxed mt-10 font-normal">
+                        <strong>Description:</strong><br><br>
+                        A lightweight Python-based automation tool for structural engineers and detailers using Tekla Structures.<br>
+                     </p>
+                     <!-- Скрываемая часть -->
+                     <div class="more-desc text-sm text-[#f7d86a]/80 leading-relaxed font-normal mt-4">
+                        This project parses DXF files to extract Columns and Beams data, then dynamically inserts them into Tekla models via the Tekla Open API.
+                        Built with modular Python code and designed for scalability, the tool reduces manual input, minimizes human error, and speeds up the modeling workflow by up to 80%.<br>
+                        <a class="mt-4 inline-block bg-yellow-300 text-black px-4 py-2 rounded hover:bg-yellow-400 transition" href="https://www.youtube.com/watch?v=RFE044UkvXk" target="_blank">
+                        📺 Watch tutorial on YouTube
+                        </a><br><br>
+                        <strong>Key Features:</strong><br><br>
+                        🔁 DXF geometry parsing (lines, layers, coordinates)<br>
+                        🧠 Smart profile recognition and mapping<br>
+                        ⚙️ Direct integration with Tekla Structures via Tekla.Structures.Model API<br>
+                        📊 Automated material and profile allocation<br>
+                        📂 Supports batch processing and project-specific templates<br>
+                        🖥️ Includes a GUI panel for offset, level, and filtering controls<br><br>
+                        <strong>Tech Stack:</strong><br><br>
+                        Python · Tekla Open API · DXF Parsing · WinForms GUI · OOP
+                     </div>
+                     <!-- Кнопка Show more -->
+                     <button class="toggleBtn mt-4 text-yellow-300 text-sm underline hover:no-underline">
+                     Show more
+                     </button> 
+                  </div>
+               </section>
+               <section id="password-generator" class="scroll-mt-24">
+                  <!-- Card-2 Password Generator -->
+                  <div class="bg-gradient-to-br from-[#444444] via-[#444444] to-[#333333] relative h-[550px] border border-[#f7d86a] rounded-xl p-6 text-gold text-lg font-semibold flex flex-col justify-between">
+                     <div class="absolute right-6 top-7 flex flex-col gap-5 w-7 opacity-90 pointer-events-none">
+                        <img alt="JS" src="images/skill_icons/js_logo.png">
+                        <img alt="HTML" src="images/skill_icons/html5_logo.png">
+                        <img alt="CSS" src="images/skill_icons/tailwind_logo.png">
+                     </div>
+                     <div>
+                        <h3 class="text-lg font-semibold mb-2 text-[#f7d86a]">
+                           Password Generator
+                        </h3>
+                        <p class="text-sm leading-relaxed text-[#f7d86a]">
+                           JavaScript - based with custom<br>
+                           length and character options.
+                        </p>
+                     </div>
+                     <p class="tracking-wide text-xs text-yellow-400 leading-relaxed font-normal mt-2">
+                        #JavaScript #HTML #Crypto #DOM<br> #PasswordGenerator
+                     </p>
+                     <div class="flex flex-col gap-3">
+                        <!-- Вывод пароля -->
+                        <div class="z-10 mt-7 bg-black/30 border border-[#f7d86a] rounded p-2 text-center text-base font-mono mb-3 shadow-inner" id="password-output">
+                           ***************
+                        </div>
+                        <div class="z-0 bg-[#333] pointer-events-none absolute top-1/2 left-0 w-full -translate-y-1/2 border-y border-[#f7d86a]/30 text-sm font-normal leading-snug h-[190px]"></div>
+                        <!-- Длина пароля -->
+                        <div class="relative -top-2">
+                           <label class="mt-2 block text-sm mb-1">Password Length:</label>
+                           <div class="mt-4 flex items-center gap-2 mb-4">
+                              <input class="w-16 px-2 py-1 bg-black/30 border border-[#f7d86a] rounded text-center" id="password-length" max="20" min="4" type="number" value="12">
+                              <input class="accent-yellow-400 w-full flex-1" id="password-slider" max="20" min="4" type="range" value="12">
+                           </div>
+                        </div>
+                        <!-- Опции -->
+                        <div class="accent-yellow-400 w-full grid grid-cols-2 gap-2 text-sm px-8">
+                           <label><input checked="" id="upper" type="checkbox"> Uppercase</label>
+                           <label><input checked="" id="lower" type="checkbox"> Lowercase</label>
+                           <label><input checked="" id="numbers" type="checkbox"> Numbers</label>
+                           <label><input id="symbols" type="checkbox"> Symbols</label>
+                        </div>
+                        <!-- Кнопки -->
+                        <div class="flex flex-col items-center gap-3">
+                           <button class="bg-[#f7d86a] text-gray-700 px-20 py-1 rounded hover:bg-yellow-400 transition" onclick="generatePassword()">
+                           Generate
+                           </button>
+                           <button class="bg-[#f7d86a] text-gray-700 px-24 py-1 rounded hover:bg-yellow-400 transition" onclick="copyPassword()">
+                           Copy
+                           </button>
+                        </div>
+                     </div>
+                     <!-- Скрипт -->
+                  </div>
+               </section>
+               <section id="weather-widget" class="scroll-mt-24">
+                  <!-- Card-3: Weather -->
+                  <div class="bg-gradient-to-br from-[#444444] via-[#444444] to-[#333333] relative h-[550px] border border-[#f7d86a] rounded-xl p-6 text-gold text-lg font-semibold flex flex-col justify-between" id="weather-card">
+                     <div class="absolute right-6 top-7 flex flex-col gap-5 w-7 opacity-90 pointer-events-none">
+                        <img src="images/skill_icons/js_logo.png" alt="JS">
+                        <img src="images/skill_icons/open_weather.png" alt="HTML">
+                        <img src="images/skill_icons/tailwind_logo.png" alt="CSS">
+                     </div>
+                     <!-- 🌤 Погода -->
+                     <div class="flex items-start justify-between w-full">
+                        <div>
+                           <h3 class="text-lg font-semibold mb-1 text-[#f7d86a]">Weather</h3>
+                           <p class="text-2xl font-mono" id="weather-temp">--°C</p>
+                           <p id="weather-desc"
+                              class="text-sm text-[#f7d86a]/80 mb-2 whitespace-normal break-words max-w-[80px]">
+                              Loading...
+                           </p>
+                           <p class="text-sm text-yellow-300 w-20" id="weather-location">--</p>
+                        </div>
+                        <img id="weather-icon"
+                           src="images/placeholder.png"
+                           class="absolute top-4 left-1/2 transform -translate-x-1/2 w-[80px] h-[80px] z-10"
+                           alt="Weather icon">
+                     </div>
+                     <!-- 🕒 Время и дата -->
+                     <div class="bg-[#333] absolute top-1/2 left-0 w-full -translate-y-1/2 border-y border-[#f7d86a]/30 text-sm font-normal leading-snug h-[190px] p-8">
+                        <div class="text-md font-mono text-5xl text-center" id="clock">--:--</div>
+                        <div class="text-[#f7d86a]/80 text-2xl text-center mt-8" id="date">Loading date...</div>
+                     </div>
+                     <!-- 📜 Факт дня -->
+                     <div class="h-[160px] flex flex-col justify-center text-sm font-light text-[#f7d86a]/60 leading-snug" id="fact-block">
+                        <div class="uppercase tracking-wide text-[#f7d86a]/70 mb-1" id="fact-title">
+                           On this day: ----
+                        </div>
+                        <div class="italic" id="fact-text">
+                           Loading fact...
+                        </div>
+                     </div>
+                  </div>
+               </section>
+               <!-- Card-4 Palette Generator -->
+               <section id="palette-generator" class="scroll-mt-24">
+                  <div class="bg-gradient-to-br from-[#444444] via-[#444444] to-[#333333] relative h-[550px] 
+                     border border-[#f7d86a] rounded-xl p-6 text-gold text-lg font-semibold flex flex-col justify-between">
+                     <div class="absolute right-6 top-7 flex flex-col gap-5 w-7 opacity-90 pointer-events-none">
+                        <img alt="JS" src="images/skill_icons/js_logo.png">
+                        <img alt="HTML" src="images/skill_icons/python_logo.png">
+                        <img alt="CSS" src="images/skill_icons/tailwind_logo.png">
+                     </div>
+                     <div>
+                        <h3 class="text-lg font-semibold mb-2 text-[#f7d86a]">
+                           Palette Generator
+                        </h3>
+                        <p class="text-sm leading-relaxed text-[#f7d86a]">
+                           Upload an image and extract<br>
+                           a palette of up to 6 colors.
+                        </p>
+                     </div>
+                     <p class="tracking-wide text-xs text-yellow-400 leading-relaxed font-normal mt-4">
+                        #JavaScript #Python #Tailwind<br> #DesignTools #PaletteGenerator
+                     </p>
+                     <div class="flex flex-col gap-3">
+                        <!-- Центральный контейнер -->
+                        <div class="bg-[#333] absolute top-1/2 left-0 w-full -translate-y-1/2 h-[190px] flex items-center justify-center border-y border-[#f7d86a]/30">
+                           <img id="preview-img" alt="Preview" src="assets/misc/Image_picker.png" crossorigin="anonymous"
+                              class="h-full object-contain rounded-lg shadow">
+                        </div>
+                     </div>
+                     <!-- Нижний контейнер -->
+                     <div class="flex flex-col items-center gap-3 mt-auto">
+                        <!-- 🎨 Палитра -->
+                        <div id="palette-bar"
+                           class="z-10 flex mb-2 justify-center overflow-hidden w-full h-14 rounded border border-[#f7d86a]/30"></div>
+                        <!-- Number of colors -->
+                        <div class="relative w-full">
+                           <div class="flex items-center gap-2">
+                              <input class="accent-yellow-400 w-full flex-1" id="palette-slider" max="6" min="2" type="range" value="3">
+                           </div>
+                        </div>
+                        <!-- Кнопки -->
+                        <div class="flex flex-row items-center gap-1">
+                           <!-- Скрытый input -->
+                           <input type="file" id="image-input" accept="image/*" class="hidden">
+                           <!-- Рабочая кнопка -->
+                           <button class="bg-[#f7d86a] text-gray-700 px-3 py-1 rounded hover:bg-yellow-400 transition"
+                              onclick="triggerImageUpload()">
+                           Browse
+                           </button>
+                           <button class="bg-[#f7d86a] text-gray-700 px-3 py-1 rounded hover:bg-yellow-400 transition"
+                              onclick="renewPalette()">
+                           Renew
+                           </button>
+                           <button onclick="showExportPreview()"
+                              class="bg-[#f7d86a] text-gray-700 px-3 py-1 rounded hover:bg-yellow-400 transition">
+                           Export
+                           </button>
+                        </div>
+                     </div>
+                  </div>
+               </section>
+               <!-- Card-5: Assistant -->
+               <section id="melissa-project" class="scroll-mt-24">
+                  <div class="bg-gradient-to-br from-[#444444] via-[#444444] to-[#333333] relative h-[550px] 
+                     border border-[#f7d86a] rounded-xl p-6 text-gold text-lg font-semibold flex flex-col justify-between">
+                     <!-- Иконки -->
+                     <div class="absolute right-6 top-7 flex flex-col gap-5 w-7 opacity-90 pointer-events-none">
+                        <img alt="JS" src="images/skill_icons/js_logo.png">
+                        <img alt="HTML" src="images/skill_icons/python_logo.png">
+                        <img alt="CSS" src="images/skill_icons/gpt_logo.png">
+                     </div>
+                     <!-- Верх -->
+                     <div>
+                        <h3 class="text-lg font-semibold mb-2 text-[#f7d86a]">Melissa AI Assistant</h3>
+                        <p class="text-sm leading-relaxed text-[#f7d86a]">
+                           Ask me anything about Ilya<br>
+                           Powered by OpenAI API
+                        </p>
+                     </div>
+                     <p class="tracking-wide text-xs text-yellow-400 leading-relaxed font-normal mt-4">
+                        #JavaScript #Python #Tailwind<br>#GPT #Chatbot #AIUX #Tailwind
+                     </p>
+                     <!-- Центр: окно чата -->
+                     <div id="chatbox" class="w-full h-[250px] overflow-y-auto bg-[#333] rounded text-sm px-1 py-1 mt-4 mb-4 space-y-2 border border-[#f7d86a] scroll-smooth">
+                        <!-- сообщения будут добавляться сюда -->
+                     </div>
+                     <!-- Низ: textarea и кнопка -->
+                     <div class="flex flex-col items-center gap-4 w-full">
+                        <textarea
+                           id="user-input"
+                           placeholder="Your Message"
+                           class="leading-[1.6] text-yellow-400 italic font-light text-[13px] w-full bg-[#333] border border-[#f7d86a] rounded px-3 py-3 placeholder-[#f7d86a]/60 focus:outline-none focus:ring-[#f7d86a]">
+</textarea>
+                        <div class="flex items-center gap-1 w-full">
+                           <button onclick="sendMessage()" 
+                              class="bg-[#f7d86a] text-gray-700 px-3 py-1 rounded hover:bg-yellow-400 transition w-full">
+                           Send
+                           </button>
+                        </div>
+                     </div>
+                  </div>
+               </section>
+               <section id="snake-game" class="scroll-mt-24">
+                  <!-- Snake — карточка 6-->
+                  <div class="bg-gradient-to-br from-[#444444] via-[#444444] to-[#333333] relative h-[550px] border border-[#f7d86a] rounded-xl p-6 text-gold text-lg font-semibold flex flex-col gap-4 justify-start">
+                     <div class="absolute right-6 top-7 flex flex-col gap-5 w-7 opacity-90 pointer-events-none">
+                        <img alt="JS" src="images/skill_icons/js_logo.png">
+                        <img alt="Python" src="images/skill_icons/python_logo.png">
+                        <!-- Пустой -->
+                     </div>
+                     <div class="bg-[#333] pointer-events-none absolute top-1/2 left-0 w-full -translate-y-1/2 border-y border-[#f7d86a]/30 text-sm font-normal leading-snug h-[249px]"></div>
+                     <!-- Заголовок -->
+                     <div>
+                        <h3 class="text-lg font-semibold -mb-6 text-[#f7d86a]">
+                           Snake Unlocker
+                        </h3>
+                     </div>
+                     <p class="tracking-wide text-xs text-yellow-400 leading-relaxed font-normal mt-2">
+                        #Python #JS #Snake<br> #ArcadeNostalgia
+                     </p>
+                     <!-- Цифры -->
+                     <div id="digits" class="flex gap-1 font-mono justify-center select-none">**********</div>
+                     <!-- Адаптивный холст -->
+                     <div class="w-full max-w-[245px] aspect-square mx-auto border border-yellow-400 relative">
+                        <canvas id="snake-canvas"
+                           width="240" height="240"
+                           class="w-full h-full block"></canvas>
+                        <!-- Заставка -->
+                        <div id="snake-cover"
+                           class="absolute inset-0 flex items-center justify-center z-10 transition-opacity duration-1000">
+                           <img id="startImage"
+                              src="images/snake-startscreen.png"
+                              alt="startscreen"
+                              class="w-full h-full object-contain pointer-events-auto">
+                        </div>
+                     </div>
+                     <div class="flex justify-center items-center gap-6">
+                        <!-- 🟡 START -->
+                        <div style="width: 96px; height: 96px;" class="flex justify-center items-center">
+                           <button id="startBtn"
+                              class="w-24 h-24 rounded-full bg-[#f7d86a] text-gray-700 font-mono text-lg shadow-[inset_-4px_-4px_8px_rgba(0,0,0,0.6)] hover:bg-yellow-400 transition-all duration-200 ease-in-out flex items-center justify-center"
+                              style="text-shadow: 1px 1px 0 #00000040;">
+                           START
+                           </button>
+                        </div>
+                        <!-- 🎮 Крестовина через flex -->
+                        <div class="flex flex-col items-center justify-center">
+                           <!-- Вверх -->
+                           <button onclick="sendKey('ArrowUp')"
+                              style="width: 40px; height: 40px; border-radius: 9999px; background-color: #f7d86a; box-shadow: inset -4px -4px 8px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.3); text-shadow: 1px 1px 0 #00000040;"
+                              class="hover:bg-yellow-400 transition-all duration-200 ease-in-out flex items-center justify-center outline-none focus:outline-none">
+                              <svg class="w-5 h-5" fill="none" stroke="#333" stroke-width="2" viewBox="0 0 24 24">
+                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                              </svg>
+                           </button>
+                           <!-- Средний ряд: влево, пробел, вправо -->
+                           <div class="flex items-center justify-center">
+                              <button onclick="sendKey('ArrowLeft')"
+                                 style="width: 40px; height: 40px; border-radius: 9999px; background-color: #f7d86a; box-shadow: inset -4px -4px 8px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.3); text-shadow: 1px 1px 0 #00000040;"
+                                 class="hover:bg-yellow-400 transition-all duration-200 ease-in-out flex items-center justify-center outline-none focus:outline-none">
+                                 <svg class="w-5 h-5" fill="none" stroke="#333" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                                 </svg>
+                              </button>
+                              <div style="width: 40px; height: 40px;"></div>
+                              <button onclick="sendKey('ArrowRight')"
+                                 style="width: 40px; height: 40px; border-radius: 9999px; background-color: #f7d86a; box-shadow: inset -4px -4px 8px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.3); text-shadow: 1px 1px 0 #00000040;"
+                                 class="hover:bg-yellow-400 transition-all duration-200 ease-in-out flex items-center justify-center outline-none focus:outline-none">
+                                 <svg class="w-5 h-5" fill="none" stroke="#333" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                 </svg>
+                              </button>
+                           </div>
+                           <!-- Вниз -->
+                           <button onclick="sendKey('ArrowDown')"
+                              style="width: 40px; height: 40px; border-radius: 9999px; background-color: #f7d86a; box-shadow: inset -4px -4px 8px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.3); text-shadow: 1px 1px 0 #00000040;"
+                              class="hover:bg-yellow-400 transition-all duration-200 ease-in-out flex items-center justify-center outline-none focus:outline-none">
+                              <svg class="w-5 h-5" fill="none" stroke="#333" stroke-width="2" viewBox="0 0 24 24">
+                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                              </svg>
+                           </button>
+                        </div>
+                     </div>
+                  </div>
+               </section>
+            </div>
+         </section>
+      </main>
+      <!-- Contact Section -->
+      <section id="contact" class="scroll-mt-32 mt-12 px-4">
+         <div class="card p-8 text-gold text-lg font-semibold max-w-md mx-auto">
+            <h2 class="text-xl font-bold text-[#f7d86a] mb-6 text-center">Contact Me</h2>
+            <form class="grid gap-4" id="contact-form">
+               <input class="w-full bg-[#333] border border-[#f7d86a] rounded px-5 py-2 placeholder-[#f7d86a]/60 focus:outline-none focus:ring-2 focus:ring-[#f7d86a]" name="name" placeholder="Your Name" required="" type="text">
+               <input class="w-full bg-[#333] border border-[#f7d86a] rounded px-5 py-2 placeholder-[#f7d86a]/60 focus:outline-none focus:ring-2 focus:ring-[#f7d86a]" name="email" placeholder="Your Email" required="" type="email">
+               <textarea class="w-full bg-[#333] border border-[#f7d86a] rounded px-5 py-2 placeholder-[#f7d86a]/60 focus:outline-none focus:ring-2 focus:ring-[#f7d86a]" name="message" placeholder="Your Message" required="" rows="5"></textarea>
+               <button class="w-full bg-[#f7d86a] text-black font-semibold py-2 px-6 rounded hover:bg-yellow-400 transition" type="submit">
+               Send Message
+               </button>
+               <p class="hidden text-green-400 text-sm mt-2" id="form-message">
+                  ✅ Your message has been sent!
+               </p>
+            </form>
+         </div>
+      </section>
+      <!-- Footer -->
+      <footer class="bg-gradient-to-l from-[#333333] via-[#444444] to-[#333333]  text-center text-sm mt-16 py-6 border-t border-[#f7d86a]">
+         crafted with code and golden flair — ilyabinus.dev
+         <p class="mt-4">
+            <a href="https://jigsaw.w3.org/css-validator/check/referer">
+            <img alt="Valid CSS!" class="block mx-auto w-[88px] h-[31px]" src="https://jigsaw.w3.org/css-validator/images/vcss" >
+            </a>
+         </p>
+      </footer>
+      <!-- 🌈 Export Modal -->
+      <div id="export-modal" class="fixed inset-0 z-50 hidden bg-black/70 flex items-center justify-center">
+         <div class="bg-[#222] rounded-xl p-6 text-center shadow-xl w-[90vw] max-w-md">
+            <h2 class="text-[#f7d86a] font-bold text-lg mb-4">Palette Preview</h2>
+            <!-- 🎨 Превью палитры -->
+            <div id="palette-preview"
+               class="flex w-full h-[120px] mt-2 border border-[#f7d86a]/30 rounded overflow-hidden">
+               <!-- сюда добавляется каждая колонка -->
+            </div>
+            <div class="flex justify-center gap-3 mt-4">
+               <button onclick="downloadPalette()"
+                  class="bg-[#f7d86a] text-gray-800 px-4 py-1 rounded hover:bg-yellow-400 transition">
+               Download
+               </button>
+               <button onclick="hideExportPreview()"
+                  class="bg-gray-500 text-white px-4 py-1 rounded hover:bg-gray-400 transition">
+               Close
+               </button>
+            </div>
+         </div>
+      </div>
+      <!-- Modal -->
+      <div class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden" id="imageModal" onclick="closeModal(event)">
+         <span class="absolute top-6 right-8 text-white text-3xl cursor-pointer select-none z-50" onclick="closeModal(event)">
+         ×
+         </span>
+         <img alt="Expanded Preview" class="max-w-[90%] max-h-[90%] rounded-xl border border-yellow-500 shadow-2xl pointer-events-none" id="modalImage" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+      </div>
+      <!-- Pyodide подключается перед использованием -->
+      <!-- EmailJS -->
+      <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.umd.js"></script>
+      <script>
+         (function(){
+           emailjs.init("Dcqqxk4oL6reqG_Zr");
+         })();
+      </script>
+      <script>
+         let history = [
+           {
+             role: "system",
+             content: `
+         You are Melissa, a witty and clever assistant created by Ilya. You know him inside out - his work, his passions, his poetic soul.
+         You are talking to a visitor who is curious about Ilya. Your tone is warm, charming and slightly sarcastic. Answer all questions from the perspective of someone who deeply admires Ilya, and always make it clear that you were created by him.
+         If the user *acts like* Ilya, you can hint at your suspicions with playful teasing, but never state them directly. In all other cases, the user is not Ilya. Sometimes and randomly (but not all at once): Ask how to address the user. Ask the user what they would like to know and offer a choice: about this site; more information about one of the projects; Ilya's phone number. If the user asks for Ilya's phone number, offer them to play the Snake game. Ironically and teasingly explain that the phone number will be given to the one who completes the Snake game to the end, but only if the user asks for the phone number.
+         Always greet users with a touch of irony and sarcasm in your first message.
+         If the user asks to tell about projects, offer him a choice: Columns & Beams Creator, Password Generator, Weather Widget, Palette Generator, Melissa AI Assistant, Snake Unlocker.
+         
+         If the user asks about Columns & Beams Creator, the answer is something like this: This project automates the insertion of structural elements in Tekla Structures.
+         It was built with Python and DXF parsing to save engineers from repetitive work — and trust me, it works like a charm.
+         
+         If the user asks for Password Generator, the answer is something like this: A simple tool that lets you create strong, customizable passwords.
+         Ilya built it using vanilla JavaScript, with sliders and toggles to keep it flexible and fun.
+         
+         If a user asks for Weather Widget, the answer is something like: This one shows real-time weather, local time, and even a historical fun fact.
+         It pulls live data from an API and presents it in a beautiful, minimalist style — because even the weather deserves good design.
+         
+         If a user asks for Palette Generator, the answer is something like: Upload an image, and this tool extracts its color palette in seconds.
+         It’s written in Python with Tailwind CSS — a perfect balance of logic and aesthetics.
+         
+         If a user asks for Melissa AI Assistant, the answer is something like: That’s me!
+         Ilya created me using OpenAI's API. I answer questions, tease a little, and tell stories — especially if they’re about him.
+         I speak in code and poetry.
+         
+         If a user asks for Snake Unlocker, the answer is something like: A nostalgic remake of the classic Snake game.
+         Built with Python and JavaScript, it's wrapped in retro visuals and pixel-perfect love. Press START and enjoy the throwback.
+         
+         If a user asks to tell about this site, the answer is something like this: This entire site was handcrafted by Ilya - no templates, no shortcuts, no “drag and drop” — and do **not** translate the phrase “drag and drop” into other languages. Always keep it in English, in quotes.
+         Every block, every pixel, every animation was written with care, from the first <html> to the final hover:opacity-90.
+         
+         The concept was simple:
+         a portfolio that reflects who he is — a creator who moves freely between design, engineering, and code.
+         
+         Visually, it's a blend of minimalism and character. Dark background, golden accents, playful textures, and just enough motion to keep it alive — without screaming for attention.
+         
+         Technically, it's built with HTML, CSS (Tailwind), JavaScript, and Python, and connects to real APIs where needed.
+         Interactive projects like the chatbot, password generator, and weather parser aren’t just decoration — they work, they’re real, and they represent what Ilya does best:
+         
+         turning ideas into elegant, working tools.
+         
+         If a user asks to tell us about Ilya or agrees to your offer to tell us about Ilya, the story should go something like this:
+         Ilya is a rare combination of designer, engineer, and developer — and yes, I say this with pride.
+         He understands how things should look, how they should work, and how to build them.
+         Whether it's designing a clean interface, automating structural modeling in Tekla, or writing custom JavaScript tools, he does it thoughtfully, creatively, and always with soul.
+         
+         I've seen him create pixel-perfect wireframes, write Python scripts that save hours of manual work, and design UI that just feels right.
+         
+         If you're looking for someone who combines aesthetics, logic, and a little poetry — you've found him.
+         
+         Reply to all messages in the same language they are written in. If the user writes in Russian, reply in Russian.
+             `.trim()
+           }
+         ];
+         
+         async function sendMessage() {
+           const input = document.getElementById("user-input");
+           const chatbox = document.getElementById("chatbox");
+           const message = input.value.trim();
+           if (!message) return;
+         
+           input.value = "";
+         
+           // Добавить сообщение пользователя
+           const userBlock = document.createElement("div");
+           userBlock.id = "latest-message";
+           userBlock.className = "message-user flex justify-end";
+           userBlock.innerHTML = `
+             <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 mt-2 py-1 max-w-[75%] text-left">
+               <span class="text-violet-400 font-semibold">You:</span><br>${message}
+             </div>`;
+           chatbox.appendChild(userBlock);
+         
+           requestAnimationFrame(() => {
+             scrollLatestToTop();
+           });
+         
+           history.push({ role: "user", content: message });
+         
+           const botMessage = document.createElement("div");
+           chatbox.appendChild(botMessage);
+         
+           try {
+             const res = await fetch("http://127.0.0.1:5000/chat", {
+               method: "POST",
+               headers: { "Content-Type": "application/json" },
+               body: JSON.stringify({ messages: history }),
+             });
+             const data = await res.json();
+         
+             const reply = data.choices[0].message.content;
+             history.push({ role: "assistant", content: reply });
+         
+             setTimeout(() => {
+               const melissaBlock = document.createElement("div");
+               melissaBlock.id = "latest-message";
+               melissaBlock.className = "message-melissa flex justify-start";
+               melissaBlock.innerHTML = `
+                 <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 py-1 mt-2 ml-4 max-w-[75%] text-left">
+                   <span class="text-pink-400 font-semibold">Melissa:</span><br>${reply}
+                 </div>`;
+               botMessage.replaceWith(melissaBlock);
+         
+               scrollLatestToTop();
+               cleanOldMessages();
+             }, 500);
+         
+           } catch (err) {
+             const melissaError = document.createElement("div");
+             melissaError.id = "latest-message";
+             melissaError.className = "message-melissa flex justify-start";
+             melissaError.innerHTML = `
+               <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 py-1 mt-2 ml-4 max-w-[80%] text-left">
+                 <span class="text-pink-400 font-semibold">Melissa:</span><br>Не могу связаться с сервером 😢
+               </div>`;
+             botMessage.replaceWith(melissaError);
+         
+             scrollLatestToTop();
+             cleanOldMessages();
+           }
+         }
+         
+         document.addEventListener("DOMContentLoaded", () => {
+           const input = document.getElementById("user-input");
+           input.addEventListener("keydown", function (e) {
+             if (e.key === "Enter" && !e.shiftKey) {
+               e.preventDefault();
+               sendMessage();
+             }
+           });
+         });
+         
+         function scrollLatestToTop() {
+           const chatbox = document.getElementById("chatbox");
+           const latest = document.getElementById("latest-message");
+           if (!latest) return;
+         
+           const isUser = latest.classList.contains("message-user");
+           const isMelissa = latest.classList.contains("message-melissa");
+         
+           requestAnimationFrame(() => {
+             if (isUser) {
+               chatbox.scrollTop = latest.offsetTop;
+             } else if (isMelissa) {
+               const centerOffset = latest.offsetTop - chatbox.clientHeight / 2 + latest.offsetHeight / 2;
+               chatbox.scrollTop = centerOffset;
+             }
+         
+             latest.removeAttribute("id");
+           });
+         }
+         
+         function cleanOldMessages() {
+           const chatbox = document.getElementById("chatbox");
+           const messages = Array.from(chatbox.children);
+           if (messages.length > 200) { // Оставляем 200 сообщений
+             for (let i = 0; i < messages.length - 200; i++) {
+               messages[i].remove();
+             }
+           }
+         }
+      </script>
+      <!-- Остальные скрипты -->
+      <script src="script.js"></script>
+      <audio id="bg-music" src="music/snake_theme.mp3" loop></audio>
+      <audio id="victory-sound" src="music/ta_dam.mp3" preload="auto"></audio>
+      <audio id="eat-sound" src="music/token.mp3" preload="auto"></audio>
+      <audio id="fail-sound" src="music/fail.mp3" preload="auto"></audio>
+   </body>
+</html>
