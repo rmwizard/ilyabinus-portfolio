@@ -633,72 +633,72 @@
            }
          ];
          
-         async function sendMessage() {
-           const input = document.getElementById("user-input");
-           const chatbox = document.getElementById("chatbox");
-           const message = input.value.trim();
-           if (!message) return;
-         
-           input.value = "";
-         
-           // Добавить сообщение пользователя
-           const userBlock = document.createElement("div");
-           userBlock.id = "latest-message";
-           userBlock.className = "message-user flex justify-end";
-           userBlock.innerHTML = `
-             <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 mt-2 py-1 max-w-[75%] text-left">
-               <span class="text-violet-400 font-semibold">You:</span><br>${message}
-             </div>`;
-           chatbox.appendChild(userBlock);
-         
-           requestAnimationFrame(() => {
-             scrollLatestToTop();
-           });
-         
-            const botMessage = document.createElement("div");
-            chatbox.appendChild(botMessage);
+            async function sendMessage() {
+              const input = document.getElementById("user-input");
+              const chatbox = document.getElementById("chatbox");
+              const message = input.value.trim();
+              if (!message) return;
             
-            try {
-              const res = await fetch("https://ilyabinus-portfolio.vercel.app/api/melissa", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ 
-                  messages: [{ role: "user", content: message }]
-                }),
+              input.value = "";
+            
+              const userBlock = document.createElement("div");
+              userBlock.id = "latest-message";
+              userBlock.className = "message-user flex justify-end";
+              userBlock.innerHTML = `
+                <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 mt-2 py-1 max-w-[75%] text-left">
+                  <span class="text-violet-400 font-semibold">You:</span><br>${message}
+                </div>`;
+              chatbox.appendChild(userBlock);
+            
+              requestAnimationFrame(() => {
+                scrollLatestToTop();
               });
             
-              const data = await res.json();
-              const reply = data.choices[0].message.content;
+              const botMessage = document.createElement("div");
+              chatbox.appendChild(botMessage);
+            
+              try {
+                history.push({ role: "user", content: message });
+            
+                const res = await fetch("https://ilyabinus-portfolio.vercel.app/api/melissa", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ messages: history }),
+                });
+            
+                const data = await res.json();
+                const reply = data.choices[0].message.content;
+            
+                history.push({ role: "assistant", content: reply });
+            
+                setTimeout(() => {
+                  const melissaBlock = document.createElement("div");
+                  melissaBlock.id = "latest-message";
+                  melissaBlock.className = "message-melissa flex justify-start";
+                  melissaBlock.innerHTML = `
+                    <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 py-1 mt-2 ml-4 max-w-[75%] text-left">
+                      <span class="text-pink-400 font-semibold">Melissa:</span><br>${reply}
+                    </div>`;
+                  botMessage.replaceWith(melissaBlock);
+            
+                  scrollLatestToTop();
+                  cleanOldMessages();
+                }, 500);
+              } catch (err) {
+                const melissaError = document.createElement("div");
+                melissaError.id = "latest-message";
+                melissaError.className = "message-melissa flex justify-start";
+                melissaError.innerHTML = `
+                  <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 py-1 mt-2 ml-4 max-w-[80%] text-left">
+                    <span class="text-pink-400 font-semibold">Melissa:</span><br>Не могу связаться с сервером 😢
+                  </div>`;
+                botMessage.replaceWith(melissaError);
+            
+                scrollLatestToTop();
+                cleanOldMessages();
+              }
+            }
 
-         
-             setTimeout(() => {
-               const melissaBlock = document.createElement("div");
-               melissaBlock.id = "latest-message";
-               melissaBlock.className = "message-melissa flex justify-start";
-               melissaBlock.innerHTML = `
-                 <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 py-1 mt-2 ml-4 max-w-[75%] text-left">
-                   <span class="text-pink-400 font-semibold">Melissa:</span><br>${reply}
-                 </div>`;
-               botMessage.replaceWith(melissaBlock);
-         
-               scrollLatestToTop();
-               cleanOldMessages();
-             }, 500);
-         
-           } catch (err) {
-             const melissaError = document.createElement("div");
-             melissaError.id = "latest-message";
-             melissaError.className = "message-melissa flex justify-start";
-             melissaError.innerHTML = `
-               <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 py-1 mt-2 ml-4 max-w-[80%] text-left">
-                 <span class="text-pink-400 font-semibold">Melissa:</span><br>Не могу связаться с сервером 😢
-               </div>`;
-             botMessage.replaceWith(melissaError);
-         
-             scrollLatestToTop();
-             cleanOldMessages();
-           }
-         }
          
          document.addEventListener("DOMContentLoaded", () => {
            const input = document.getElementById("user-input");
