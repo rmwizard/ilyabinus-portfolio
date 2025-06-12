@@ -6,13 +6,11 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-
 @app.route("/chat", methods=["POST"])
 def chat():
     try:
         data = request.get_json()
-        user_messages = data.get("messages", [])
-        messages = user_messages
+        messages = data.get("messages", [])
 
         print("📥 Получено сообщение:", messages)
 
@@ -24,11 +22,10 @@ def chat():
         )
 
         return jsonify(response)
-    
+
     except Exception as e:
         print("💥 Ошибка GPT:", e)
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
-
