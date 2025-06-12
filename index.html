@@ -660,11 +660,11 @@
               try {
                 history.push({ role: "user", content: message });
             
-                const res = await fetch("https://ilyabinus-portfolio.vercel.app/api/melissa", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ messages: history }),
-                });
+            const res = await fetch("https://ilyabinus-portfolio.vercel.app/chat", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ messages: history }),
+            });
             
                 const data = await res.json();
                 const reply = data.choices[0].message.content;
