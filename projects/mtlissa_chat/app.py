@@ -12,7 +12,7 @@ def chat():
     try:
         data = request.get_json()
         user_messages = data.get("messages", [])
-        messages = get_melissa_persona() + user_messages
+        messages = user_messages
 
         print("📥 Получено сообщение:", messages)
 
