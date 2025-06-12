@@ -417,7 +417,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       window.pyodide = py;
 
-      const code = await (await fetch("/projects/snake-2_5d/snakecode.py")).text();
+      const code = await (await fetch("/projects/code/snakecode.py")).text();
       await py.runPythonAsync(code);
 
       
