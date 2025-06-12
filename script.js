@@ -417,7 +417,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       window.pyodide = py;
 
-      const code = await (await fetch("/projects/snake-2_5d/snake_py.py")).text();
+      const code = await (await fetch("/projects/snake-2_5d/snake.txt")).text();
       await py.runPythonAsync(code);
 
       const startFn = py.globals.get("start");
