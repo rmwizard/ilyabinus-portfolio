@@ -417,7 +417,20 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       window.pyodide = py;
 
-      const code = await (await fetch("/code/snakecode.py")).text();
+      // Падла ебучая
+      // Падла ебучая
+      // Падла ебучая
+      // Падла ебучая
+      // Падла ебучая
+      // Падла ебучая
+      // Падла ебучая
+      // Падла ебучая
+      // Падла ебучая
+      // Падла ебучая
+
+      
+      const code = await (await fetch("https://raw.githubusercontent.com/rmwizard/ilyabinus-portfolio/main/code/snakecode.py"
+                                     )).text();
       await py.runPythonAsync(code);
 
       
