@@ -661,7 +661,7 @@
            chatbox.appendChild(botMessage);
          
            try {
-             const res = await fetch("http://127.0.0.1:5000/chat", {
+             const res = await fetch("https://ilyabinus-portfolio.vercel.app/api/melissa", {
                method: "POST",
                headers: { "Content-Type": "application/json" },
                body: JSON.stringify({ messages: history }),
