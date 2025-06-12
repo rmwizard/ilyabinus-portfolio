@@ -608,10 +608,9 @@
               const res = await fetch("https://ilyabinus-portfolio.vercel.app/api/melissa", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ 
-              messages: [{ role: "user", content: message }]
-            }),
-
+                body: JSON.stringify({ 
+                  messages: [{ role: "user", content: message }]
+                }),
               });
             
               const data = await res.json();
