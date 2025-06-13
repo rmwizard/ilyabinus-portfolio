@@ -816,36 +816,27 @@ document.addEventListener("DOMContentLoaded", () => {
    
 
 const input = document.getElementById("user-input");
-const cardsWrapper = document.getElementById("cards-wrapper");
 const sendBtnWrapper = document.getElementById("send-btn-wrapper");
 
-function adjustCardsPosition() {
-  if (window.innerWidth > 768) return;
-
-  const sendBottom = sendBtnWrapper.getBoundingClientRect().bottom;
-  const distanceToBottom = window.innerHeight - sendBottom;
-
-  const desiredGap = 0; // 🔥 идеальное прилипание к клавиатуре
-  const offset = distanceToBottom - desiredGap;
-
-  cardsWrapper.style.transform = `translateY(-${offset}px)`;
-  cardsWrapper.style.transition = "transform 0.3s ease";
-}
-
-if (input && cardsWrapper && sendBtnWrapper) {
-  input.addEventListener("focus", adjustCardsPosition);
-  input.addEventListener("blur", () => {
-    cardsWrapper.style.transform = "none";
-  });
-
-  window.addEventListener("resize", () => {
-    if (document.activeElement === input) {
-      adjustCardsPosition();
+if (input && sendBtnWrapper) {
+  input.addEventListener("focus", () => {
+    if (window.innerWidth <= 768) {
+      sendBtnWrapper.style.position = "fixed";
+      sendBtnWrapper.style.left = "0";
+      sendBtnWrapper.style.right = "0";
+      sendBtnWrapper.style.bottom = "5%";
+      sendBtnWrapper.style.zIndex = "999";
     }
   });
+
+  input.addEventListener("blur", () => {
+    sendBtnWrapper.style.position = "";
+    sendBtnWrapper.style.bottom = "";
+    sendBtnWrapper.style.left = "";
+    sendBtnWrapper.style.right = "";
+    sendBtnWrapper.style.zIndex = "";
+  });
 }
-
-
 
 
 window.js = window.js || {};
