@@ -815,30 +815,17 @@ document.addEventListener("DOMContentLoaded", () => {
 });   
    
 
-// Получаем элементы
-const userInput = document.getElementById('user-input');
-const melissaProject = document.getElementById('melissa-project');
+const input = document.getElementById("user-input");
 
-// Функция для вычисления позиции скролла
-function calculateScrollPosition() {
-  const windowHeight = window.innerHeight; // Высота окна браузера
-  const centerOffset = windowHeight / 2; // Половина высоты окна (центр экрана)
-  const thirtyPercent = 0.2 * centerOffset; // 30% от центра
-  const sectionTop = melissaProject.getBoundingClientRect().top + window.scrollY; // Абсолютная позиция секции
-  const scrollPosition = sectionTop - centerOffset + thirtyPercent; // Позиция для скролла
-  return scrollPosition;
-}
-
-// Функция для выполнения скролла
-function scrollToSection() {
-  const scrollPosition = calculateScrollPosition();
-  window.scrollTo({
-    top: scrollPosition,
-    behavior: 'smooth' // Плавный скролл
+if (input) {
+  input.addEventListener("focus", () => {
+    if (window.innerWidth <= 768) {
+      const melissa = document.getElementById("melissa-project");
+      if (melissa) {
+        melissa.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
   });
 }
-
-// Добавляем обработчик события для тапа
-userInput.addEventListener('touchstart', scrollToSection);
 
 window.js = window.js || {};
