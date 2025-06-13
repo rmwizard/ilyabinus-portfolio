@@ -836,18 +836,18 @@ if (input) {
   });
 }
 
-    const burgerBtn = document.getElementById("burger-btn");
-    const navMenu = document.getElementById("nav-menu");
-    const aboutWrapper = document.getElementById("about-wrapper");
+  const burgerBtn = document.getElementById("burger-btn");
+  const navMenu = document.getElementById("nav-menu");
+  const aboutWrapper = document.getElementById("about-wrapper");
 
-    burgerBtn.addEventListener("click", () => {
-      navMenu.classList.toggle("hidden");
+  burgerBtn.addEventListener("click", () => {
+    navMenu.classList.toggle("hidden");
 
-      if (!navMenu.classList.contains("hidden")) {
-        aboutWrapper.classList.add("mt-24");
-      } else {
-        aboutWrapper.classList.remove("mt-24");
-      }
-    });
+    if (!navMenu.classList.contains("hidden")) {
+      aboutWrapper.classList.add("mt-[80px]");
+    } else {
+      aboutWrapper.classList.remove("mt-[80px]");
+    }
+  });
 
 window.js = window.js || {};
