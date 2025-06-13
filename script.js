@@ -26,8 +26,87 @@ document.addEventListener("DOMContentLoaded", () => {
       victorySound: document.getElementById("victory-sound"),
       failSound: document.getElementById("fail-sound"),
       startImage: document.getElementById("startImage"),
-      snakeCover: document.getElementById("snake-cover")
+      snakeCover: document.getElementById("snake-cover"),
+
+      // 🧩 Новое для модалки:
+      melissaProject: document.getElementById("melissa-project"),
+      modal: document.getElementById("modal"),
+      modalContent: document.getElementById("modal-content"),
+      expandBtn: document.getElementById("expand-button")
    };
+
+// ✅ Безопасно и только если всё найдено
+if (
+  DOM.melissaProject &&
+  DOM.expandBtn &&
+  DOM.modal &&
+  DOM.modalContent
+) {
+  const originalParent = DOM.melissaProject.parentNode;
+  const placeholder = document.createElement("div");
+  placeholder.style.display = "none";
+
+  const melissaCardInner = [...DOM.melissaProject.querySelectorAll("div")].find(div =>
+    div.classList.contains("h-[550px]")
+  );
+
+  let isExpanded = false;
+
+  DOM.expandBtn.addEventListener("click", () => {
+    const modal = document.getElementById("modal");
+    const modalContent = document.getElementById("modal-content");
+
+    if (!modal || !modalContent || !DOM.melissaProject) return;
+
+    if (!isExpanded) {
+      // 🔼 Открываем
+      originalParent.insertBefore(placeholder, DOM.melissaProject);
+      modalContent.appendChild(DOM.melissaProject);
+      modal.classList.remove("hidden");
+
+      if (melissaCardInner) {
+        melissaCardInner.classList.remove("h-[550px]");
+        melissaCardInner.classList.add("h-full");
+      }
+
+      setTimeout(() => {
+        modalContent.classList.remove("scale-95");
+        modalContent.classList.add("scale-100");
+      }, 10);
+
+      DOM.expandBtn.textContent = "Close";
+      isExpanded = true;
+
+    } else {
+      // 🔽 Закрываем
+      modalContent.classList.remove("scale-100");
+      modalContent.classList.add("scale-95");
+
+      setTimeout(() => {
+        modal.classList.add("hidden");
+        originalParent.insertBefore(DOM.melissaProject, placeholder);
+        placeholder.remove();
+
+        if (melissaCardInner) {
+          melissaCardInner.classList.remove("h-full");
+          melissaCardInner.classList.add("h-[550px]");
+        }
+
+        DOM.expandBtn.textContent = "Expand";
+        isExpanded = false;
+      }, 300);
+    }
+  });
+
+  // Дополнительно — можно закрывать по фону
+  DOM.modal.addEventListener("click", (e) => {
+    if (e.target === DOM.modal && isExpanded) {
+      DOM.expandBtn.click(); // Просто "кликнуть" на ту же кнопку
+    }
+  });
+}
+
+
 
    // === Утилиты ===
    function playSound(element, errorMessage) {
@@ -877,5 +956,39 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+  const melissaSection = document.getElementById("melissa-project");
+  const modal = document.getElementById("modal");
+  const modalContent = document.getElementById("modal-content");
+
+  const originalParent = melissaSection.parentNode;
+  const placeholder = document.createElement("div");
+  placeholder.style.display = "none";
+
+  document.getElementById("expand-button").addEventListener("click", () => {
+    originalParent.insertBefore(placeholder, melissaSection);
+    modalContent.appendChild(melissaSection);
+    modal.classList.remove("hidden");
+
+    // 🔍 scale эффект
+    setTimeout(() => {
+      modalContent.classList.remove("scale-95");
+      modalContent.classList.add("scale-100");
+    }, 10);
+  });
+
+  // Клик по фону = закрыть
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      // Убираем scale эффект
+      modalContent.classList.remove("scale-100");
+      modalContent.classList.add("scale-95");
+
+      setTimeout(() => {
+        modal.classList.add("hidden");
+        originalParent.insertBefore(melissaSection, placeholder);
+        placeholder.remove();
+      }, 300); // столько же, сколько transition
+    }
+  });
 
 window.js = window.js || {};
