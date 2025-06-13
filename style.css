@@ -212,7 +212,7 @@ body::-webkit-scrollbar {
 
 @media (max-width: 768px) {
   body {
-    transform: scale(1.6) translateX(14%);
+    transform: scale(1.8) translateX(17%);
     transform-origin: top center;
   }
 
