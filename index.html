@@ -179,7 +179,8 @@
                   <path d="M10 22h4"></path>
                </svg>
             </h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+               <!-- Контейнер с карточками -->
+               <div id="cards-wrapper" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-300">
                <!-- Card 1 CBC-->
                <section id="cbc-card" class="scroll-mt-24">
                   <div class="bg-gradient-to-br from-[#444444] via-[#444444] to-[#333333] border-y border-[#f7d86a] card relative overflow-hidden transition-all duration-500 bg-[#333333] border border-[#f7d86a] rounded-xl p-6 text-gold text-lg font-semibold flex flex-col justify-between">
@@ -418,7 +419,7 @@
                            placeholder="Your Message"
                            class="leading-[1.6] text-yellow-400 italic font-light text-[13px] w-full bg-[#333] border border-[#f7d86a] rounded px-3 py-3 placeholder-[#f7d86a]/60 focus:outline-none focus:ring-[#f7d86a]">
 </textarea>
-                        <div class="flex items-center gap-1 w-full">
+                        <div id="send-btn-wrapper" class="flex items-center gap-1 w-full">
                            <button onclick="sendMessage()" 
                               class="bg-[#f7d86a] text-gray-700 px-3 py-1 rounded hover:bg-yellow-400 transition w-full">
                            Send
