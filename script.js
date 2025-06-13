@@ -831,8 +831,8 @@ if (input && cardsWrapper && sendWrapper) {
 
       console.log("📱 Расстояние до клавиатуры:", bottomGap);
 
-      const MIN_GAP = 50;  // если расстояние меньше — поднимаем
-      const MAX_GAP = 40;  // если расстояние больше — опускаем
+      const MIN_GAP = 5;  // если расстояние меньше — поднимаем
+      const MAX_GAP = 5;  // если расстояние больше — опускаем
       
       if (bottomGap < MIN_GAP) {
         cardsWrapper.style.transform = `translateY(-${MIN_GAP - bottomGap}px)`;
