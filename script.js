@@ -788,7 +788,7 @@ function getCurrentPalette() {
    });
 }
 
-<script>
+
   const input = document.getElementById("user-input");
   const cardsWrapper = document.getElementById("cards-wrapper");
   const sendWrapper = document.getElementById("send-btn-wrapper");
@@ -810,6 +810,6 @@ function getCurrentPalette() {
   input.addEventListener("blur", () => {
     cardsWrapper.style.transform = "translateY(0)";
   });
-</script>
+
 
 window.js = window.js || {};
