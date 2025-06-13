@@ -817,27 +817,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const input = document.getElementById("user-input");
 const cardsWrapper = document.getElementById("cards-wrapper");
+const sendBtnWrapper = document.getElementById("send-btn-wrapper");
 
 let initialHeight = window.innerHeight;
 
-if (input && cardsWrapper) {
-  window.addEventListener("resize", () => {
-    const currentHeight = window.innerHeight;
-    const keyboardHeight = initialHeight - currentHeight;
+function adjustCardsPosition() {
+  const currentHeight = window.innerHeight;
+  const keyboardHeight = initialHeight - currentHeight;
 
-    // Если клавиатура открылась (разница больше 100px)
-    if (keyboardHeight > 80 && window.innerWidth <= 768) {
-      cardsWrapper.style.transform = `translateY(-${keyboardHeight}px)`;
-      cardsWrapper.style.transition = "transform 0.3s ease";
-    } else {
-      cardsWrapper.style.transform = "none";
-    }
-  });
+  if (keyboardHeight > 100 && window.innerWidth <= 768) {
+    // определяем, насколько кнопка выше клавиатуры
+    const sendBottom = sendBtnWrapper.getBoundingClientRect().bottom;
+    const distanceToBottom = currentHeight - sendBottom;
 
+    const offset = keyboardHeight - distanceToBottom;
+    cardsWrapper.style.transform = `translateY(-${offset}px)`;
+    cardsWrapper.style.transition = "transform 0.3s ease";
+  } else {
+    cardsWrapper.style.transform = "none";
+  }
+}
+
+if (input && cardsWrapper && sendBtnWrapper) {
+  window.addEventListener("resize", adjustCardsPosition);
+  input.addEventListener("focus", adjustCardsPosition);
   input.addEventListener("blur", () => {
     cardsWrapper.style.transform = "none";
   });
 }
+
 
 
 
