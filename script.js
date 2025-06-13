@@ -826,7 +826,7 @@ if (input && cardsWrapper) {
     const keyboardHeight = initialHeight - currentHeight;
 
     // Если клавиатура открылась (разница больше 100px)
-    if (keyboardHeight > 100 && window.innerWidth <= 768) {
+    if (keyboardHeight > 80 && window.innerWidth <= 768) {
       cardsWrapper.style.transform = `translateY(-${keyboardHeight}px)`;
       cardsWrapper.style.transition = "transform 0.3s ease";
     } else {
