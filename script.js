@@ -826,11 +826,13 @@ function adjustCardsPosition() {
   const keyboardHeight = initialHeight - currentHeight;
 
   if (keyboardHeight > 100 && window.innerWidth <= 768) {
-    // определяем, насколько кнопка выше клавиатуры
     const sendBottom = sendBtnWrapper.getBoundingClientRect().bottom;
     const distanceToBottom = currentHeight - sendBottom;
 
-    const offset = keyboardHeight - distanceToBottom;
+    // Добавим ручной дельту для "прилипания"
+    const extraOffset = 20;
+    const offset = keyboardHeight - distanceToBottom + extraOffset;
+
     cardsWrapper.style.transform = `translateY(-${offset}px)`;
     cardsWrapper.style.transition = "transform 0.3s ease";
   } else {
@@ -845,7 +847,6 @@ if (input && cardsWrapper && sendBtnWrapper) {
     cardsWrapper.style.transform = "none";
   });
 }
-
 
 
 
