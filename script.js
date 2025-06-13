@@ -822,10 +822,19 @@ if (input) {
     if (window.innerWidth <= 768) {
       const melissa = document.getElementById("melissa-project");
       if (melissa) {
-        melissa.scrollIntoView({ behavior: "smooth", block: "start" });
+        const rect = melissa.getBoundingClientRect();
+        const scrollTop = window.scrollY || window.pageYOffset;
+        const offsetTop = rect.top + scrollTop;
+
+        const customOffset = 180; // ⬅️ отступ от верха
+        window.scrollTo({
+          top: offsetTop - customOffset,
+          behavior: "smooth"
+        });
       }
     }
   });
 }
+
 
 window.js = window.js || {};
