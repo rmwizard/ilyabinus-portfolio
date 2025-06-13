@@ -840,13 +840,30 @@ if (input) {
   const navMenu = document.getElementById("nav-menu");
   const aboutWrapper = document.getElementById("about-wrapper");
 
-  burgerBtn.addEventListener("click", () => {
-    navMenu.classList.toggle("hidden");
+  let isOpen = false;
 
-    if (!navMenu.classList.contains("hidden")) {
+  burgerBtn.addEventListener("click", () => {
+    isOpen = !isOpen;
+
+    if (isOpen) {
+      navMenu.classList.remove("hidden");
+      // Триггерим плавное появление
+      setTimeout(() => {
+        navMenu.classList.remove("opacity-0", "scale-y-0");
+        navMenu.classList.add("opacity-100", "scale-y-100");
+      }, 10); // Даем браузеру "вдохнуть" между классами
+
       aboutWrapper.classList.add("mt-[80px]");
     } else {
+      navMenu.classList.remove("opacity-100", "scale-y-100");
+      navMenu.classList.add("opacity-0", "scale-y-0");
+
       aboutWrapper.classList.remove("mt-[80px]");
+
+      // После анимации скрываем элемент
+      setTimeout(() => {
+        navMenu.classList.add("hidden");
+      }, 300); // Совпадает с `duration-300`
     }
   });
 
