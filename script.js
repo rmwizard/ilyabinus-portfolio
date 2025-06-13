@@ -817,41 +817,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const input = document.getElementById("user-input");
 const cardsWrapper = document.getElementById("cards-wrapper");
-const sendWrapper = document.getElementById("send-btn-wrapper");
 
-if (input && cardsWrapper && sendWrapper) {
-  let originalTransform = cardsWrapper.style.transform || "";
+let initialHeight = window.innerHeight;
 
-  input.addEventListener("focus", () => {
-    if (window.innerWidth > 768) return; // 🧱 Только мобилки
+if (input && cardsWrapper) {
+  window.addEventListener("resize", () => {
+    const currentHeight = window.innerHeight;
+    const keyboardHeight = initialHeight - currentHeight;
 
-    setTimeout(() => {
-      const rect = sendWrapper.getBoundingClientRect();
-      const bottomGap = window.innerHeight - rect.bottom;
-
-      console.log("📱 Расстояние до клавиатуры:", bottomGap);
-
-      const MIN_GAP = 5;  // если расстояние меньше — поднимаем
-      const MAX_GAP = 5;  // если расстояние больше — опускаем
-      
-      if (bottomGap < MIN_GAP) {
-        cardsWrapper.style.transform = `translateY(-${MIN_GAP - bottomGap}px)`;
-      } else if (bottomGap > MAX_GAP) {
-        cardsWrapper.style.transform = `translateY(${bottomGap - MAX_GAP}px)`;
-      } else {
-        cardsWrapper.style.transform = originalTransform;
-      }
-
+    // Если клавиатура открылась (разница больше 100px)
+    if (keyboardHeight > 100 && window.innerWidth <= 768) {
+      cardsWrapper.style.transform = `translateY(-${keyboardHeight}px)`;
       cardsWrapper.style.transition = "transform 0.3s ease";
-    }, 300);
+    } else {
+      cardsWrapper.style.transform = "none";
+    }
   });
 
   input.addEventListener("blur", () => {
-    if (window.innerWidth > 768) return;
-    cardsWrapper.style.transform = originalTransform;
+    cardsWrapper.style.transform = "none";
   });
-} else {
-  console.warn("❗ Один из элементов (input/cardsWrapper/sendWrapper) не найден");
 }
 
 
