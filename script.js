@@ -815,26 +815,30 @@ document.addEventListener("DOMContentLoaded", () => {
 });   
    
 
-const input = document.getElementById("user-input");
-const melissaProject = document.getElementById("melissa-project");
+// Получаем элементы
+const userInput = document.getElementById('user-input');
+const melissaProject = document.getElementById('melissa-project');
 
-if (input && melissaProject) {
-  input.addEventListener("focus", () => {
-    if (window.innerWidth <= 768) {
-      const rect = melissaProject.getBoundingClientRect();
-      const scrollTop = window.scrollY || window.pageYOffset;
-      const offsetTop = rect.top + scrollTop;
+// Функция для вычисления позиции скролла
+function calculateScrollPosition() {
+  const windowHeight = window.innerHeight; // Высота окна браузера
+  const centerOffset = windowHeight / 2; // Половина высоты окна (центр экрана)
+  const thirtyPercent = 0.3 * centerOffset; // 30% от центра
+  const sectionTop = melissaProject.getBoundingClientRect().top + window.scrollY; // Абсолютная позиция секции
+  const scrollPosition = sectionTop - centerOffset + thirtyPercent; // Позиция для скролла
+  return scrollPosition;
+}
 
-      // Смещаем вверх на 180px
-      const scrollTo = offsetTop - 180;
-
-      window.scrollTo({
-        top: scrollTo,
-        behavior: "smooth"
-      });
-    }
+// Функция для выполнения скролла
+function scrollToSection() {
+  const scrollPosition = calculateScrollPosition();
+  window.scrollTo({
+    top: scrollPosition,
+    behavior: 'smooth' // Плавный скролл
   });
 }
 
+// Добавляем обработчик события для тапа
+userInput.addEventListener('touchstart', scrollToSection);
 
 window.js = window.js || {};
