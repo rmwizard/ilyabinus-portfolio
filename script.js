@@ -825,7 +825,7 @@ function adjustCardsPosition() {
   const sendBottom = sendBtnWrapper.getBoundingClientRect().bottom;
   const distanceToBottom = window.innerHeight - sendBottom;
 
-  const desiredGap = 5; // 🔥 идеальное прилипание к клавиатуре
+  const desiredGap = 30; // 🔥 идеальное прилипание к клавиатуре
   const offset = distanceToBottom - desiredGap;
 
   cardsWrapper.style.transform = `translateY(-${offset}px)`;
