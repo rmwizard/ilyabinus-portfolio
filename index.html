@@ -391,7 +391,7 @@
                   </div>
                </section>
                <!-- Card-5: Assistant -->
-               <section id="melissa-project" class="scroll-mt-24">
+               <section id="melissa-project" class="scroll-mt-24 h-full">
                   <div class="bg-gradient-to-br from-[#444444] via-[#444444] to-[#333333] relative h-[550px] 
                      border border-[#f7d86a] rounded-xl p-6 text-gold text-lg font-semibold flex flex-col justify-between">
                      <!-- Иконки -->
@@ -412,7 +412,8 @@
                         #JavaScript #Python #Tailwind<br>#GPT #Chatbot #AIUX #Tailwind
                      </p>
                      <!-- Центр: окно чата -->
-                     <div id="chatbox" class="w-full h-[250px] overflow-y-auto bg-[#333] rounded text-sm px-1 py-1 mt-4 mb-4 space-y-2 border border-[#f7d86a] scroll-smooth">
+                     <div id="chatbox" class="flex-1 overflow-y-auto bg-[#333] rounded text-sm px-1 py-1 mt-4 mb-4
+                space-y-2 border border-[#f7d86a] scroll-smooth">
                         <!-- сообщения будут добавляться сюда -->
                      </div>
                      <!-- Низ: textarea и кнопка -->
@@ -425,8 +426,12 @@
                         <div id="send-btn-wrapper" class="flex items-center gap-1 w-full">
                            <button onclick="sendMessage()" 
                               class="bg-[#f7d86a] text-gray-700 px-3 py-1 rounded hover:bg-yellow-400 transition w-full">
-                           Send
+                           Send Message
                            </button>
+                           <button id="expand-button" class="bg-[#f7d86a] text-gray-700 px-3 py-1 rounded hover:bg-yellow-400 transition">
+                           Expand
+                           </button>
+
                         </div>
                      </div>
                   </div>
@@ -750,5 +755,18 @@
       <audio id="victory-sound" src="music/ta_dam.mp3" preload="auto"></audio>
       <audio id="eat-sound" src="music/token.mp3" preload="auto"></audio>
       <audio id="fail-sound" src="music/fail.mp3" preload="auto"></audio>
+
+            <!-- 🖼️ Модальное окно -->
+      <div id="modal"
+         class="fixed inset-0 z-50 bg-black/80 flex items-center justify-center hidden">
+      <div class="w-full h-full flex items-center justify-center">
+         <div id="modal-content"
+               class="bg-[#222] p-6 transition-transform duration-300 scale-95 rounded-none 
+                     h-screen w-[90vw] max-w-[600px] overflow-auto">
+            <!-- Сюда вставляется melissa-project -->
+         </div>
+      </div>
+      </div>
+
    </body>
 </html>
