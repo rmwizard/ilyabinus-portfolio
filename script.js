@@ -788,27 +788,28 @@ function getCurrentPalette() {
    });
 }
 
-  const msg2 = document.createElement("div");
-  msg2.className = "message-melissa flex justify-start";
-  msg2.innerHTML = `
-    <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 py-1 mt-2 ml-4 max-w-[75%] text-left">
-      <span class="text-pink-400 font-semibold">Melissa:</span><br>Hello there!<br>!שלום וברכה<br>Привет!<br>I’m here.<br>Fully present.<br>Fully yours.<br>So... what’s on your mind?
-    </div>`;
-  chatbox.appendChild(msg2);
+<script>
+  const input = document.getElementById("user-input");
+  const cardsWrapper = document.getElementById("cards-wrapper");
+  const sendWrapper = document.getElementById("send-btn-wrapper");
 
-  chatbox.scrollTop = chatbox.scrollHeight;
-;
+  let initialHeight = window.innerHeight;
 
-const input = document.getElementById("user-input");
-const cardsWrapper = document.getElementById("cards-wrapper");
+  input.addEventListener("focus", () => {
+    setTimeout(() => {
+      const heightDiff = initialHeight - window.innerHeight;
 
-input.addEventListener("focus", () => {
-  // Добавим отступ снизу, чтобы всё сдвинулось выше клавиатуры
-  cardsWrapper.style.marginBottom = "200px"; // подбирай под размер клавы
-});
+      if (heightDiff > 100) {
+        // Клавиатура реально появилась
+        cardsWrapper.style.transform = `translateY(-${heightDiff - 30}px)`; // -30px — чтобы send прилипала
+        cardsWrapper.style.transition = "transform 0.3s ease";
+      }
+    }, 300); // ждём появления клавиатуры
+  });
 
-input.addEventListener("blur", () => {
-  cardsWrapper.style.marginBottom = "0";
-});
+  input.addEventListener("blur", () => {
+    cardsWrapper.style.transform = "translateY(0)";
+  });
+</script>
 
 window.js = window.js || {};
