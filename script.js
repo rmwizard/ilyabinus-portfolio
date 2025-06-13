@@ -836,6 +836,7 @@ if (input) {
   });
 }
 
+document.addEventListener("DOMContentLoaded", () => {
   const burgerBtn = document.getElementById("burger-btn");
   const navMenu = document.getElementById("nav-menu");
   const aboutWrapper = document.getElementById("about-wrapper");
@@ -847,24 +848,34 @@ if (input) {
 
     if (isOpen) {
       navMenu.classList.remove("hidden");
-      // Триггерим плавное появление
+
+      // 💫 Плавное появление меню
       setTimeout(() => {
         navMenu.classList.remove("opacity-0", "scale-y-0");
         navMenu.classList.add("opacity-100", "scale-y-100");
-      }, 10); // Даем браузеру "вдохнуть" между классами
+      }, 10);
 
-      aboutWrapper.classList.add("mt-[80px]");
+      // 📱 Только на мобиле добавляем отступ
+      if (window.innerWidth < 640) {
+        aboutWrapper.classList.add("mt-[80px]");
+      }
+
     } else {
       navMenu.classList.remove("opacity-100", "scale-y-100");
       navMenu.classList.add("opacity-0", "scale-y-0");
 
-      aboutWrapper.classList.remove("mt-[80px]");
-
-      // После анимации скрываем элемент
+      // 💫 Плавное скрытие и скрываем через 300ms
       setTimeout(() => {
         navMenu.classList.add("hidden");
-      }, 300); // Совпадает с `duration-300`
+      }, 300);
+
+      // 📱 Убираем отступ только на мобиле
+      if (window.innerWidth < 640) {
+        aboutWrapper.classList.remove("mt-[80px]");
+      }
     }
   });
+});
+
 
 window.js = window.js || {};
