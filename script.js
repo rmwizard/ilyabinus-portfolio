@@ -819,34 +819,32 @@ const input = document.getElementById("user-input");
 const cardsWrapper = document.getElementById("cards-wrapper");
 const sendBtnWrapper = document.getElementById("send-btn-wrapper");
 
-let initialHeight = window.innerHeight;
-
 function adjustCardsPosition() {
-  const currentHeight = window.innerHeight;
-  const keyboardHeight = initialHeight - currentHeight;
+  if (window.innerWidth > 768) return;
 
-  if (keyboardHeight > 100 && window.innerWidth <= 768) {
-    const sendBottom = sendBtnWrapper.getBoundingClientRect().bottom;
-    const distanceToBottom = currentHeight - sendBottom;
+  const sendBottom = sendBtnWrapper.getBoundingClientRect().bottom;
+  const distanceToBottom = window.innerHeight - sendBottom;
 
-    // Добавим ручной дельту для "прилипания"
-    const extraOffset = -20;
-    const offset = keyboardHeight - distanceToBottom + extraOffset;
+  const desiredGap = 5; // 🔥 идеальное прилипание к клавиатуре
+  const offset = distanceToBottom - desiredGap;
 
-    cardsWrapper.style.transform = `translateY(-${offset}px)`;
-    cardsWrapper.style.transition = "transform 0.3s ease";
-  } else {
-    cardsWrapper.style.transform = "none";
-  }
+  cardsWrapper.style.transform = `translateY(-${offset}px)`;
+  cardsWrapper.style.transition = "transform 0.3s ease";
 }
 
 if (input && cardsWrapper && sendBtnWrapper) {
-  window.addEventListener("resize", adjustCardsPosition);
   input.addEventListener("focus", adjustCardsPosition);
   input.addEventListener("blur", () => {
     cardsWrapper.style.transform = "none";
   });
+
+  window.addEventListener("resize", () => {
+    if (document.activeElement === input) {
+      adjustCardsPosition();
+    }
+  });
 }
+
 
 
 
