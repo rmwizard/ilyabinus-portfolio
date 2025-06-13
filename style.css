@@ -210,15 +210,4 @@ body::-webkit-scrollbar {
   padding-right: 8px; /* чтобы скролл не вылазил внутрь контента */
 }
 
-@media (max-width: 768px) {
-  body {
-    transform: scale(1.8) translateX(17%);
-    transform-origin: top center;
-  }
-
-  html, body {
-    width: 100%;
-    overflow-x: hidden;
-  }
-}
 
