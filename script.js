@@ -816,39 +816,22 @@ document.addEventListener("DOMContentLoaded", () => {
    
 
 const input = document.getElementById("user-input");
-const cardsWrapper = document.getElementById("cards-wrapper");
-const sendBtnWrapper = document.getElementById("send-btn-wrapper");
+const melissaProject = document.getElementById("melissa-project");
 
-let originalTransform = cardsWrapper.style.transform || "none";
+if (input && melissaProject) {
+  input.addEventListener("focus", () => {
+    if (window.innerWidth <= 768) {
+      const rect = melissaProject.getBoundingClientRect();
+      const scrollTop = window.scrollY || window.pageYOffset;
+      const offsetTop = rect.top + scrollTop;
 
-function adjustCardsPosition() {
-  if (window.innerWidth > 768) return;
+      // Смещаем вверх на 180px
+      const scrollTo = offsetTop - 180;
 
-  // где находится низ кнопки относительно видимой части экрана
-  const sendBottom = sendBtnWrapper.getBoundingClientRect().bottom;
-
-  // высота, доступная после появления клавиатуры
-  const visibleHeight = window.innerHeight;
-
-  // насколько далеко кнопка от низа экрана
-  const distanceToBottom = visibleHeight - sendBottom;
-
-  const desiredGap = 5;
-  const offset = distanceToBottom - desiredGap;
-
-  cardsWrapper.style.transform = `translateY(${offset * -1}px)`;
-  cardsWrapper.style.transition = "transform 0.3s ease";
-}
-
-if (input && cardsWrapper && sendBtnWrapper) {
-  input.addEventListener("focus", adjustCardsPosition);
-  input.addEventListener("blur", () => {
-    cardsWrapper.style.transform = originalTransform;
-  });
-
-  window.addEventListener("resize", () => {
-    if (document.activeElement === input) {
-      adjustCardsPosition();
+      window.scrollTo({
+        top: scrollTo,
+        behavior: "smooth"
+      });
     }
   });
 }
