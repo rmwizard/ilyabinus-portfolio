@@ -836,5 +836,18 @@ if (input) {
   });
 }
 
+    const burgerBtn = document.getElementById("burger-btn");
+    const navMenu = document.getElementById("nav-menu");
+    const aboutWrapper = document.getElementById("about-wrapper");
+
+    burgerBtn.addEventListener("click", () => {
+      navMenu.classList.toggle("hidden");
+
+      if (!navMenu.classList.contains("hidden")) {
+        aboutWrapper.classList.add("mt-24");
+      } else {
+        aboutWrapper.classList.remove("mt-24");
+      }
+    });
 
 window.js = window.js || {};
