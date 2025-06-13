@@ -823,35 +823,34 @@ if (input && cardsWrapper && sendWrapper) {
   let originalTransform = cardsWrapper.style.transform || "";
 
   input.addEventListener("focus", () => {
+    if (window.innerWidth > 768) return; // 🧱 Только мобилки
+
     setTimeout(() => {
       const rect = sendWrapper.getBoundingClientRect();
       const bottomGap = window.innerHeight - rect.bottom;
 
-      console.log("🧠 Расстояние от кнопки до низа экрана:", bottomGap);
+      console.log("📱 Расстояние до клавиатуры:", bottomGap);
 
       if (bottomGap < 20) {
-        // Кнопка скрыта за клавиатурой — двигаем вверх
-        const shiftUp = 20 - bottomGap;
-        cardsWrapper.style.transform = `translateY(-${shiftUp}px)`;
+        cardsWrapper.style.transform = `translateY(-${20 - bottomGap}px)`;
       } else if (bottomGap > 100) {
-        // Кнопка слишком высоко — двигаем вниз
-        const shiftDown = bottomGap - 100;
-        cardsWrapper.style.transform = `translateY(${shiftDown}px)`;
+        cardsWrapper.style.transform = `translateY(${bottomGap - 100}px)`;
       } else {
-        // Всё норм — ничего не двигаем
         cardsWrapper.style.transform = originalTransform;
       }
 
       cardsWrapper.style.transition = "transform 0.3s ease";
-    }, 300); // ждём, пока клавиатура полностью появится
+    }, 300);
   });
 
   input.addEventListener("blur", () => {
+    if (window.innerWidth > 768) return;
     cardsWrapper.style.transform = originalTransform;
   });
 } else {
-  console.warn("🚫 Не найдены один или несколько элементов для адаптивного скролла");
+  console.warn("❗ Один из элементов (input/cardsWrapper/sendWrapper) не найден");
 }
+
 
 
 window.js = window.js || {};
