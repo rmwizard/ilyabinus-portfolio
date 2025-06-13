@@ -812,6 +812,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   chatbox.appendChild(msg2);
   chatbox.scrollTop = chatbox.scrollHeight;
+});   
+   
+  const msg2 = document.createElement("div");
+  msg2.className = "message-melissa flex justify-start";
+  msg2.innerHTML = `
+    <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 py-1 mt-2 ml-4 max-w-[75%] text-left">
+      <span class="text-pink-400 font-semibold">Melissa:</span><br>
+      Hello there!<br>
+      <span dir="rtl">!שלום וברכה</span><br>
+      Привет!<br>
+      I’m here.<br>
+      Fully present.<br>
+      Fully yours.<br>
+      So... what’s on your mind?
+    </div>
+  `;
+
+  chatbox.appendChild(msg2);
+  chatbox.scrollTop = chatbox.scrollHeight;
 });
 
 const input = document.getElementById("user-input");
@@ -844,5 +863,13 @@ if (input && cardsWrapper && sendWrapper) {
       cardsWrapper.style.transition = "transform 0.3s ease";
     }, 300); // ждём, пока клавиатура полностью появится
   });
+
+  input.addEventListener("blur", () => {
+    cardsWrapper.style.transform = originalTransform;
+  });
+} else {
+  console.warn("🚫 Не найдены один или несколько элементов для адаптивного скролла");
+}
+
 
 window.js = window.js || {};
