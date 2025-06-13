@@ -814,27 +814,35 @@ document.addEventListener("DOMContentLoaded", () => {
   chatbox.scrollTop = chatbox.scrollHeight;
 });
 
-  const input = document.getElementById("user-input");
-  const cardsWrapper = document.getElementById("cards-wrapper");
-  const sendWrapper = document.getElementById("send-btn-wrapper");
+const input = document.getElementById("user-input");
+const cardsWrapper = document.getElementById("cards-wrapper");
+const sendWrapper = document.getElementById("send-btn-wrapper");
 
-  let initialHeight = window.innerHeight;
+if (input && cardsWrapper && sendWrapper) {
+  let originalTransform = cardsWrapper.style.transform || "";
 
   input.addEventListener("focus", () => {
     setTimeout(() => {
-      const heightDiff = initialHeight - window.innerHeight;
+      const rect = sendWrapper.getBoundingClientRect();
+      const bottomGap = window.innerHeight - rect.bottom;
 
-      if (heightDiff > 100) {
-        // Клавиатура реально появилась
-        cardsWrapper.style.transform = `translateY(-${heightDiff - 30}px)`; // -30px — чтобы send прилипала
-        cardsWrapper.style.transition = "transform 0.3s ease";
+      console.log("🧠 Расстояние от кнопки до низа экрана:", bottomGap);
+
+      if (bottomGap < 20) {
+        // Кнопка скрыта за клавиатурой — двигаем вверх
+        const shiftUp = 20 - bottomGap;
+        cardsWrapper.style.transform = `translateY(-${shiftUp}px)`;
+      } else if (bottomGap > 100) {
+        // Кнопка слишком высоко — двигаем вниз
+        const shiftDown = bottomGap - 100;
+        cardsWrapper.style.transform = `translateY(${shiftDown}px)`;
+      } else {
+        // Всё норм — ничего не двигаем
+        cardsWrapper.style.transform = originalTransform;
       }
-    }, 300); // ждём появления клавиатуры
-  });
 
-  input.addEventListener("blur", () => {
-    cardsWrapper.style.transform = "translateY(0)";
+      cardsWrapper.style.transition = "transform 0.3s ease";
+    }, 300); // ждём, пока клавиатура полностью появится
   });
-
 
 window.js = window.js || {};
