@@ -209,3 +209,15 @@ body::-webkit-scrollbar {
   box-sizing: border-box;
   padding-right: 8px; /* чтобы скролл не вылазил внутрь контента */
 }
+
+@media (max-width: 768px) {
+  body {
+    transform: scale(1.12);
+    transform-origin: top center;
+  }
+
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+}
