@@ -799,4 +799,16 @@ function getCurrentPalette() {
   chatbox.scrollTop = chatbox.scrollHeight;
 ;
 
+const input = document.getElementById("user-input");
+const cardsWrapper = document.getElementById("cards-wrapper");
+
+input.addEventListener("focus", () => {
+  // Добавим отступ снизу, чтобы всё сдвинулось выше клавиатуры
+  cardsWrapper.style.marginBottom = "200px"; // подбирай под размер клавы
+});
+
+input.addEventListener("blur", () => {
+  cardsWrapper.style.marginBottom = "0";
+});
+
 window.js = window.js || {};
