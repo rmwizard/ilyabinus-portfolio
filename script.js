@@ -830,7 +830,7 @@ function adjustCardsPosition() {
     const distanceToBottom = currentHeight - sendBottom;
 
     // Добавим ручной дельту для "прилипания"
-    const extraOffset = 60;
+    const extraOffset = -20;
     const offset = keyboardHeight - distanceToBottom + extraOffset;
 
     cardsWrapper.style.transform = `translateY(-${offset}px)`;
