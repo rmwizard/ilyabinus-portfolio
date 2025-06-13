@@ -831,10 +831,13 @@ if (input && cardsWrapper && sendWrapper) {
 
       console.log("📱 Расстояние до клавиатуры:", bottomGap);
 
-      if (bottomGap < 20) {
-        cardsWrapper.style.transform = `translateY(-${20 - bottomGap}px)`;
-      } else if (bottomGap > 100) {
-        cardsWrapper.style.transform = `translateY(${bottomGap - 100}px)`;
+      const MIN_GAP = 24;  // если расстояние меньше — поднимаем
+      const MAX_GAP = 80;  // если расстояние больше — опускаем
+      
+      if (bottomGap < MIN_GAP) {
+        cardsWrapper.style.transform = `translateY(-${MIN_GAP - bottomGap}px)`;
+      } else if (bottomGap > MAX_GAP) {
+        cardsWrapper.style.transform = `translateY(${bottomGap - MAX_GAP}px)`;
       } else {
         cardsWrapper.style.transform = originalTransform;
       }
