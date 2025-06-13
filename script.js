@@ -823,7 +823,7 @@ const melissaProject = document.getElementById('melissa-project');
 function calculateScrollPosition() {
   const windowHeight = window.innerHeight; // Высота окна браузера
   const centerOffset = windowHeight / 2; // Половина высоты окна (центр экрана)
-  const thirtyPercent = 0.3 * centerOffset; // 30% от центра
+  const thirtyPercent = 0.2 * centerOffset; // 30% от центра
   const sectionTop = melissaProject.getBoundingClientRect().top + window.scrollY; // Абсолютная позиция секции
   const scrollPosition = sectionTop - centerOffset + thirtyPercent; // Позиция для скролла
   return scrollPosition;
