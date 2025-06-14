@@ -509,9 +509,15 @@ if (
       if (startFn) {
          window.startFn = startFn;
          console.log("✅ Snake startFn готова.");
+      
+         if (DOM.startBtn) {
+            DOM.startBtn.disabled = false;
+            DOM.startBtn.addEventListener("click", window.startGame); // ← 💡 сюда
+         }
       } else {
          console.warn("⛔ 'start' function not found in Python globals.");
       }
+
 
       if (DOM.startBtn) {
          DOM.startBtn.disabled = false;
