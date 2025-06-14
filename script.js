@@ -608,11 +608,18 @@ window.startGame = function () {
   } else {
     btn.textContent = "START";
     stopSound(DOM.bgMusic);
-    window.pyodide.runPythonAsync("stop()").catch(err => {
-      console.error("❌ Ошибка при вызове stop():", err);
-    });
+    
+    // ✅ Защищённый вызов stop()
+    if (window.pyodide && typeof window.pyodide.runPythonAsync === "function") {
+      window.pyodide.runPythonAsync("stop()").catch(err => {
+        console.error("❌ Ошибка при вызове stop():", err);
+      });
+    } else {
+      console.warn("⛔ pyodide не загружен или runPythonAsync недоступен");
+    }
   }
 };
+
 
 
 window.gameOver = function() {
