@@ -582,13 +582,27 @@ if (
       }
    });
 
-   window.startGame = function() {
-      if (DOM.startBtn) DOM.startBtn.disabled = true;
-      playSound(DOM.bgMusic, "🎧 Автозапуск заблокирован:");
-      hideStartScreen();
-      clearCanvas();
-      launchGame();
-   };
+window.startGame = function () {
+  const btn = DOM.startBtn;
+  if (!btn) return;
+
+  const isStarting = btn.textContent === "START";
+
+  if (isStarting) {
+    btn.textContent = "STOP";
+    playSound(DOM.bgMusic, "🎧 Автозапуск заблокирован:");
+    hideStartScreen();
+    clearCanvas();
+    launchGame();
+  } else {
+    btn.textContent = "START";
+    stopSound(DOM.bgMusic);
+    window.pyodide.runPythonAsync("stop()").catch(err => {
+      console.error("❌ Ошибка при вызове stop():", err);
+    });
+  }
+};
+
 
    window.gameOver = function() {
       console.log("📛 Вызвана window.gameOver()");
