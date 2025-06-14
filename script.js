@@ -604,24 +604,29 @@ window.startGame = function () {
 };
 
 
-   window.gameOver = function() {
-      console.log("📛 Вызвана window.gameOver()");
-      stopSound(DOM.bgMusic);
-      playSound(DOM.failSound, "💀 Ошибка звука поражения:");
-      createModal({
-         content: "💥 Oops! You hit a bomb.",
-         buttonId: "retryBtn",
-         buttonText: "Try Again",
-         buttonClass: "bg-red-500 text-white hover:bg-red-400",
-         textClass: "text-red-400",
-         onButtonClick: () => {
+window.gameOver = function() {
+    console.log("📛 Вызвана window.gameOver()");
+    stopSound(DOM.bgMusic);
+    playSound(DOM.failSound, "💀 Ошибка звука поражения:");
+
+    createModal({
+        content: "💥 Oops! You hit a bomb.",
+        buttonId: "retryBtn",
+        buttonText: "Try Again",
+        buttonClass: "bg-red-500 text-white hover:bg-red-400",
+        textClass: "text-red-400",
+        onButtonClick: () => {
             resetStartScreen();
             resetDigits();
             clearCanvas();
-            if (DOM.startBtn) DOM.startBtn.disabled = false;
-         }
-      });
-   };
+            if (DOM.startBtn) {
+                DOM.startBtn.disabled = false;
+                DOM.startBtn.textContent = "START";
+            }
+        }
+    }); // ✅ Закрываем createModal
+}; // ✅ Закрываем window.gameOver
+
 
 window.unlockCallback = function() {
     console.log("🏁 Победа!");
@@ -637,11 +642,14 @@ window.unlockCallback = function() {
             resetStartScreen();
             resetDigits();
             clearCanvas();
-            if (DOM.startBtn) DOM.startBtn.disabled = false;
-         //   launchGame(); // Этот вызов запускает игру автоматически
+            if (DOM.startBtn) {
+                DOM.startBtn.disabled = false;
+                DOM.startBtn.textContent = "START";
+            }
         }
-    });
+    }); // ← Закрываем createModal правильно тут
 };
+
 
 
    window.failCallback = function() {
