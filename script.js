@@ -534,19 +534,34 @@ if (
         if (DOM.startBtn) {
           DOM.startBtn.disabled = false;
       
-      DOM.startBtn.addEventListener("click", () => {
-        if (window.startFn) {
-          console.log("🎮 Первый запуск startGame()");
-          window.startGame();
+          let firstClick = true;
       
-          setTimeout(() => {
-            console.log("🎮 Повторный запуск startGame()");
-            window.startGame();
-          }, 50);
-        } else {
-          console.warn("⏳ Игра ещё не готова — подожди секунду.");
+          DOM.startBtn.addEventListener("click", async () => {
+            if (!window.startFn) {
+              console.warn("⏳ Игра ещё не готова — подожди секунду.");
+              return;
+            }
+      
+            if (firstClick) {
+              console.log("🎮 Первый клик — двойной запуск");
+      
+              await window.startGame();
+      
+              setTimeout(() => {
+                window.startGame();
+              }, 50);
+      
+              firstClick = false;
+            } else {
+              console.log("🎮 Обычный клик");
+              await window.startGame();
+            }
+          });
         }
-      });
+      } else {
+        console.warn("⛔ 'start' function not found in Python globals.");
+      }
+
 
 
 
