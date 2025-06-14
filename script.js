@@ -525,27 +525,26 @@ if (
 
       console.log("🔍 Пробуем получить startFn из Python...");
       const startFn = py.globals.get("start");
+      
       if (startFn) {
         window.startFn = startFn;
         isReady = true; // ✅ Устанавливаем флаг готовности
         console.log("✅ Snake startFn готова.");
       
-      if (DOM.startBtn) {
-        DOM.startBtn.disabled = true;
+        if (DOM.startBtn) {
+          DOM.startBtn.disabled = true;
       
-        DOM.startBtn.addEventListener("click", () => {
-          if (window.startFn) {
-            window.startGame();
-          } else {
-            console.warn("⏳ Игра ещё не готова — подожди секунду.");
-          }
-        });
-      }
-
+          DOM.startBtn.addEventListener("click", () => {
+            if (window.startFn) {
+              window.startGame();
+            } else {
+              console.warn("⏳ Игра ещё не готова — подожди секунду.");
+            }
+          });
+        }
       } else {
         console.warn("⛔ 'start' function not found in Python globals.");
       }
-
 
 
       // Full-screen helper
