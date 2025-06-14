@@ -532,7 +532,7 @@ if (
         console.log("✅ Snake startFn готова.");
       
         if (DOM.startBtn) {
-          DOM.startBtn.disabled = true;
+          DOM.startBtn.disabled = false;
       
           DOM.startBtn.addEventListener("click", () => {
             if (window.startFn) {
