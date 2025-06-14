@@ -1003,19 +1003,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 10);
   });
 
-  // Клик по фону = закрыть
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      // Убираем scale эффект
-      modalContent.classList.remove("scale-100");
-      modalContent.classList.add("scale-95");
 
-      setTimeout(() => {
-        modal.classList.add("hidden");
-        originalParent.insertBefore(melissaSection, placeholder);
-        placeholder.remove();
-      }, 300); // столько же, сколько transition
-    }
-  });
 
 window.js = window.js || {};
