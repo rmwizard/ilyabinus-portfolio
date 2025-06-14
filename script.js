@@ -530,10 +530,18 @@ if (
         isReady = true; // ✅ Устанавливаем флаг готовности
         console.log("✅ Snake startFn готова.");
       
-        if (DOM.startBtn) {
-          DOM.startBtn.disabled = false;
-          DOM.startBtn.addEventListener("click", window.startGame);
-        }
+      if (DOM.startBtn) {
+        DOM.startBtn.disabled = true;
+      
+        DOM.startBtn.addEventListener("click", () => {
+          if (window.startFn) {
+            window.startGame();
+          } else {
+            console.warn("⏳ Игра ещё не готова — подожди секунду.");
+          }
+        });
+      }
+
       } else {
         console.warn("⛔ 'start' function not found in Python globals.");
       }
