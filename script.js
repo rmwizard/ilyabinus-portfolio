@@ -585,32 +585,42 @@ if (
       }
    });
 
-window.startGame = function () {
-  const btn = DOM.startBtn;
-  if (!btn) return;
+      window.startGame = async () => {
+        const btn = DOM.startBtn;
+        if (!btn) return;
+      
+        const isStarting = btn.textContent === "START";
+      
+        if (isStarting) {
+          btn.textContent = "STOP";
+          playSound(DOM.bgMusic, "🎧 Автозапуск заблокирован:");
+          hideStartScreen();
+          clearCanvas();
+      
+          if (typeof window.startFn === "function") {
+            try {
+              await window.startFn(); // ✅ запуск Python-функции
+            } catch (err) {
+              console.error("🔥 Ошибка запуска:", err);
+            }
+          } else {
+            console.warn("⚠️ startFn не определена");
+          }
+      
+        } else {
+          btn.textContent = "START";
+          stopSound(DOM.bgMusic);
+      
+          if (window.pyodide && typeof window.pyodide.runPythonAsync === "function") {
+            window.pyodide.runPythonAsync("stop()").catch(err => {
+              console.error("❌ Ошибка при вызове stop():", err);
+            });
+          } else {
+            console.warn("⛔ pyodide не загружен или runPythonAsync недоступен");
+          }
+        }
+      };
 
-  const isStarting = btn.textContent === "START";
-
-  if (isStarting) {
-    btn.textContent = "STOP";
-    playSound(DOM.bgMusic, "🎧 Автозапуск заблокирован:");
-    hideStartScreen();
-    clearCanvas();
-    launchGame();
-  } else {
-    btn.textContent = "START";
-    stopSound(DOM.bgMusic);
-    
-    // ✅ Защищённый вызов stop()
-    if (window.pyodide && typeof window.pyodide.runPythonAsync === "function") {
-      window.pyodide.runPythonAsync("stop()").catch(err => {
-        console.error("❌ Ошибка при вызове stop():", err);
-      });
-    } else {
-      console.warn("⛔ pyodide не загружен или runPythonAsync недоступен");
-    }
-  }
-};
 
 
 
