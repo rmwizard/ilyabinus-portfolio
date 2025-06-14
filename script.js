@@ -178,21 +178,30 @@ if (
       return modal;
    }
 
-   async function launchGame() {
-      if (!window.pyodide) {
-         console.warn("⛔ Pyodide not loaded");
-         return;
-      }
-      try {
-         if (window.startFn) {
-            await window.startFn();
-         } else {
-            await window.pyodide.runPythonAsync("start()");
+      async function launchGame() {
+         if (!window.pyodide) {
+            console.warn("⛔ Pyodide not loaded");
+            return;
          }
-      } catch (err) {
-         console.error("Ошибка запуска игры:", err);
+      
+         let retries = 10;
+         while (!window.startFn && retries > 0) {
+            console.log("⏳ Ждём появления startFn...");
+            await new Promise(res => setTimeout(res, 100));
+            retries--;
+         }
+      
+         try {
+            if (window.startFn) {
+               await window.startFn();
+            } else {
+               console.warn("⛔ startFn всё ещё undefined после ожидания.");
+            }
+         } catch (err) {
+            console.error("Ошибка запуска игры:", err);
+         }
       }
-   }
+
 
    // === burger + glow ===
    document.addEventListener('mouseover', (e) => {
