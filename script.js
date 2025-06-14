@@ -534,17 +534,20 @@ if (
         if (DOM.startBtn) {
           DOM.startBtn.disabled = false;
       
-          DOM.startBtn.addEventListener("click", () => {
-            if (window.startFn) {
-              window.startGame();
-            } else {
-              console.warn("⏳ Игра ещё не готова — подожди секунду.");
-            }
-          });
+      DOM.startBtn.addEventListener("click", () => {
+        if (window.startFn) {
+          console.log("🎮 Первый запуск startGame()");
+          window.startGame();
+      
+          setTimeout(() => {
+            console.log("🎮 Повторный запуск startGame()");
+            window.startGame();
+          }, 50);
+        } else {
+          console.warn("⏳ Игра ещё не готова — подожди секунду.");
         }
-      } else {
-        console.warn("⛔ 'start' function not found in Python globals.");
-      }
+      });
+
 
 
       // Full-screen helper
