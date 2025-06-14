@@ -987,21 +987,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("modal");
   const modalContent = document.getElementById("modal-content");
 
-  const originalParent = melissaSection.parentNode;
-  const placeholder = document.createElement("div");
-  placeholder.style.display = "none";
 
-  document.getElementById("expand-button").addEventListener("click", () => {
-    originalParent.insertBefore(placeholder, melissaSection);
-    modalContent.appendChild(melissaSection);
-    modal.classList.remove("hidden");
 
-    // 🔍 scale эффект
-    setTimeout(() => {
-      modalContent.classList.remove("scale-95");
-      modalContent.classList.add("scale-100");
-    }, 10);
-  });
 
 
 
