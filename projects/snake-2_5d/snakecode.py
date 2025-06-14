@@ -240,6 +240,24 @@ async def start():
     except Exception as e:
         console.log("❌ Error starting game_loop():", str(e))
 
+def stop():
+    global task
+    console.log("🧹 Python: stop() called")
+    if task and not task.done():
+        task.cancel()
+        console.log("🛑 Game loop cancelled")
+
+    ctx.fillStyle = "#272627"
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+    image = document.getElementById("startImage") if document else None
+    if image:
+        image.classList.remove("opacity-0")
+        image.style.pointerEvents = "auto"
+
+    reset_game()
+
+
 def draw_corner_mask(x: int, y: int, dx: int, dy: int, size: int, offset: int, bg_color: str) -> None:
     ctx.fillStyle = bg_color
     if dx == 1:  # right
@@ -332,3 +350,5 @@ def draw_tail(x: int, y: int, prev: dict) -> None:
 
 import builtins
 builtins.start = start
+builtins.stop = stop  # 👈 обязательно!
+
