@@ -717,9 +717,6 @@ window.unlockCallback = function() {
       window.gameOver();
    };
 
-   if (DOM.startBtn) {
-      DOM.startBtn.addEventListener("click", window.startGame);
-   }
 
    window.playEatSound = function() {
       console.log("🍏 playEatSound вызвана!");
