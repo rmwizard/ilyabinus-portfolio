@@ -524,7 +524,7 @@ if (
          console.warn("⛔ 'start' function not found in Python globals.");
       }
       
-      const startFn = py.globals.get("start");
+      window.startFn = py.globals.get("start");
       if (startFn) {
          window.startFn = startFn;
          console.log("✅ Snake startFn готова.");
