@@ -516,7 +516,13 @@ if (
       
       await py.runPythonAsync(code);
 
-
+      const startFn = py.globals.get("start");
+      if (startFn) {
+         window.startFn = startFn;
+         console.log("✅ Snake startFn готова.");
+      } else {
+         console.warn("⛔ 'start' function not found in Python globals.");
+      }
       
       const startFn = py.globals.get("start");
       if (startFn) {
