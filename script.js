@@ -523,15 +523,6 @@ if (
          DOM.startBtn.disabled = false;
       }
 
-      
-      window.startFn = py.globals.get("start");
-      if (startFn) {
-         window.startFn = startFn;
-         console.log("✅ Snake startFn готова.");
-      } else {
-         console.warn("⛔ 'start' function not found in Python globals.");
-      }
-
       // Full-screen helper
       window.openSnakeFull = () => {
          const url = "/projects/snake-2_5d/snake_py.html";
