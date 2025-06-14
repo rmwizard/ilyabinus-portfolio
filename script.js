@@ -522,6 +522,8 @@ if (
       
       await py.runPythonAsync(code);
       
+
+      console.log("🔍 Пробуем получить startFn из Python...");
       const startFn = py.globals.get("start");
       if (startFn) {
         window.startFn = startFn;
