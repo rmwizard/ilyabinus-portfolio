@@ -512,16 +512,12 @@ if (
       
          if (DOM.startBtn) {
             DOM.startBtn.disabled = false;
-            DOM.startBtn.addEventListener("click", window.startGame); // ← 💡 сюда
+            DOM.startBtn.addEventListener("click", window.startGame);
          }
       } else {
          console.warn("⛔ 'start' function not found in Python globals.");
       }
 
-
-      if (DOM.startBtn) {
-         DOM.startBtn.disabled = false;
-      }
 
       // Full-screen helper
       window.openSnakeFull = () => {
