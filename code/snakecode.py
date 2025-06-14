@@ -350,4 +350,3 @@ def draw_tail(x: int, y: int, prev: dict) -> None:
 
 import builtins
 builtins.start = start
-builtins.stop = stop  
