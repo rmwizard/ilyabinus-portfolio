@@ -497,26 +497,31 @@ if (
       window.pyodide = py;
 
    
+      let isReady = false; // 🧠 Флаг готовности
+      
+      // 🐍 Загрузка и запуск Python-кода
       const code = await (await fetch(
         "https://raw.githubusercontent.com/rmwizard/ilyabinus-portfolio/main/code/snakecode.py?ts=" + Date.now()
       )).text();
       
-      console.log("🐍 Загруженный код:\n", code); // 💡 Убедимся, что stop там есть
+      console.log("🐍 Загруженный код:\n", code);
       
       await py.runPythonAsync(code);
-
+      
       const startFn = py.globals.get("start");
       if (startFn) {
-         window.startFn = startFn;
-         console.log("✅ Snake startFn готова.");
+        window.startFn = startFn;
+        isReady = true; // ✅ Устанавливаем флаг готовности
+        console.log("✅ Snake startFn готова.");
       
-         if (DOM.startBtn) {
-            DOM.startBtn.disabled = false;
-            DOM.startBtn.addEventListener("click", window.startGame);
-         }
+        if (DOM.startBtn) {
+          DOM.startBtn.disabled = false;
+          DOM.startBtn.addEventListener("click", window.startGame);
+        }
       } else {
-         console.warn("⛔ 'start' function not found in Python globals.");
+        console.warn("⛔ 'start' function not found in Python globals.");
       }
+
 
 
       // Full-screen helper
