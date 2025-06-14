@@ -508,9 +508,14 @@ if (
       // Падла ебучая
 
       
-      const code = await (await fetch("https://raw.githubusercontent.com/rmwizard/ilyabinus-portfolio/main/code/snakecode.py"
-                                     )).text();
+      const code = await (await fetch(
+        "https://raw.githubusercontent.com/rmwizard/ilyabinus-portfolio/main/code/snakecode.py?ts=" + Date.now()
+      )).text();
+      
+      console.log("🐍 Загруженный код:\n", code); // 💡 Убедимся, что stop там есть
+      
       await py.runPythonAsync(code);
+
 
       
       const startFn = py.globals.get("start");
