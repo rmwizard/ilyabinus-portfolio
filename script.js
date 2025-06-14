@@ -179,27 +179,32 @@ if (
    }
 
       async function launchGame() {
-         if (!window.pyodide) {
-            console.warn("⛔ Pyodide not loaded");
-            return;
-         }
+          if (!window.pyodide) {
+              console.warn("⛔ Pyodide not loaded");
+              return;
+          }
       
-         let retries = 10;
-         while (!window.startFn && retries > 0) {
-            console.log("⏳ Ждём появления startFn...");
-            await new Promise(res => setTimeout(res, 100));
-            retries--;
-         }
+          let retries = 20; // Увеличиваем количество попыток
+          const retryInterval = 200; // Увеличиваем интервал до 200 мс
+          while (!window.startFn && retries > 0) {
+              console.log(`⏳ Ждём появления startFn... (попытка ${21 - retries}/20)`);
+              await new Promise(res => setTimeout(res, retryInterval));
+              retries--;
+          }
       
-         try {
-            if (window.startFn) {
-               await window.startFn();
-            } else {
-               console.warn("⛔ startFn всё ещё undefined после ожидания.");
-            }
-         } catch (err) {
-            console.error("Ошибка запуска игры:", err);
-         }
+          if (window.startFn) {
+              console.log("✅ startFn готова, активируем кнопку");
+              if (DOM.startBtn) {
+                  DOM.startBtn.disabled = false;
+                  DOM.startBtn.textContent = "START";
+              }
+          } else {
+              console.error("❌ startFn не появилась после ожидания");
+              if (DOM.startBtn) {
+                  DOM.startBtn.textContent = "ERROR";
+                  DOM.startBtn.disabled = true;
+              }
+          }
       }
 
 
@@ -595,39 +600,63 @@ if (
    });
 
       window.startGame = async () => {
-        const btn = DOM.startBtn;
-        if (!btn) return;
-      
-        const isStarting = btn.textContent === "START";
-      
-        if (isStarting) {
-          btn.textContent = "STOP";
-          playSound(DOM.bgMusic, "🎧 Автозапуск заблокирован:");
-          hideStartScreen();
-          clearCanvas();
-      
-          if (typeof window.startFn === "function") {
-            try {
-              await window.startFn(); // ✅ запуск Python-функции
-            } catch (err) {
-              console.error("🔥 Ошибка запуска:", err);
-            }
-          } else {
-            console.warn("⚠️ startFn не определена");
+          const btn = DOM.startBtn;
+          if (!btn) {
+              console.error("❌ startBtn не найден");
+              return;
           }
       
-        } else {
-          btn.textContent = "START";
-          stopSound(DOM.bgMusic);
-      
-          if (window.pyodide && typeof window.pyodide.runPythonAsync === "function") {
-            window.pyodide.runPythonAsync("stop()").catch(err => {
-              console.error("❌ Ошибка при вызове stop():", err);
-            });
-          } else {
-            console.warn("⛔ pyodide не загружен или runPythonAsync недоступен");
+          if (!window.startFn) {
+              console.warn("⚠️ Игра ещё не готова, пожалуйста, подождите.");
+              return;
           }
-        }
+      
+          const isStarting = btn.textContent === "START";
+      
+          if (isStarting) {
+              btn.textContent = "STOP";
+              btn.disabled = true; // Отключаем кнопку на время запуска
+              playSound(DOM.bgMusic, "🎧 Автозапуск заблокирован:");
+              hideStartScreen();
+              clearCanvas();
+      
+              try {
+                  console.log("🔍 Вызываем startFn...");
+                  await window.startFn();
+                  console.log("✅ startFn выполнена успешно");
+                  btn.disabled = false; // Включаем кнопку после успешного запуска
+              } catch (err) {
+                  console.error("🔥 Ошибка запуска:", err);
+                  btn.textContent = "START";
+                  btn.disabled = false;
+                  resetStartScreen();
+                  createModal({
+                      content: "❌ Не удалось запустить игру. Попробуйте снова.",
+                      buttonId: "retryBtn",
+                      buttonText: "OK",
+                      buttonClass: "bg-red-500 text-white hover:bg-red-400",
+                      textClass: "text-red-400",
+                      onButtonClick: () => {
+                          resetStartScreen();
+                          resetDigits();
+                          clearCanvas();
+                      }
+                  });
+              }
+          } else {
+              btn.textContent = "START";
+              btn.disabled = true;
+              stopSound(DOM.bgMusic);
+      
+              try {
+                  await window.pyodide.runPythonAsync("stop()");
+                  console.log("✅ stop() выполнен успешно");
+                  btn.disabled = false;
+              } catch (err) {
+                  console.error("❌ Ошибка при вызове stop():", err);
+                  btn.disabled = false;
+              }
+          }
       };
 
 
