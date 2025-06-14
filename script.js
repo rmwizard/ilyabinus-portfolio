@@ -496,18 +496,7 @@ if (
       });
       window.pyodide = py;
 
-      // Падла ебучая
-      // Падла ебучая
-      // Падла ебучая
-      // Падла ебучая
-      // Падла ебучая
-      // Падла ебучая
-      // Падла ебучая
-      // Падла ебучая
-      // Падла ебучая
-      // Падла ебучая
-
-      
+   
       const code = await (await fetch(
         "https://raw.githubusercontent.com/rmwizard/ilyabinus-portfolio/main/code/snakecode.py?ts=" + Date.now()
       )).text();
@@ -523,6 +512,11 @@ if (
       } else {
          console.warn("⛔ 'start' function not found in Python globals.");
       }
+
+      if (DOM.startBtn) {
+         DOM.startBtn.disabled = false;
+      }
+
       
       window.startFn = py.globals.get("start");
       if (startFn) {
