@@ -534,8 +534,7 @@ if (
         if (DOM.startBtn) {
           DOM.startBtn.disabled = false;
       
-          // 💡 двойной клик вместо одинарного
-          DOM.startBtn.addEventListener("dblclick", () => {
+          DOM.startBtn.addEventListener("click", () => {
             if (window.startFn) {
               window.startGame();
             } else {
