@@ -52,51 +52,54 @@ if (
 
   let isExpanded = false;
 
-  DOM.expandBtn.addEventListener("click", () => {
-    const modal = document.getElementById("modal");
-    const modalContent = document.getElementById("modal-content");
+DOM.expandBtn.addEventListener("click", () => {
+  const modal = document.getElementById("modal");
+  const modalContent = document.getElementById("modal-content");
+  const icon = document.getElementById("expand-icon");
 
-    if (!modal || !modalContent || !DOM.melissaProject) return;
+  if (!modal || !modalContent || !DOM.melissaProject || !icon) return;
 
-    if (!isExpanded) {
-      // 🔼 Открываем
-      originalParent.insertBefore(placeholder, DOM.melissaProject);
-      modalContent.appendChild(DOM.melissaProject);
-      modal.classList.remove("hidden");
+  if (!isExpanded) {
+    // 🔼 Открываем
+    originalParent.insertBefore(placeholder, DOM.melissaProject);
+    modalContent.appendChild(DOM.melissaProject);
+    modal.classList.remove("hidden");
+
+    if (melissaCardInner) {
+      melissaCardInner.classList.remove("h-[550px]");
+      melissaCardInner.classList.add("h-full");
+    }
+
+    setTimeout(() => {
+      modalContent.classList.remove("scale-95");
+      modalContent.classList.add("scale-100");
+    }, 10);
+
+    icon.src = "/images/close-icon.png";
+    icon.alt = "Close";
+    isExpanded = true;
+
+  } else {
+    // 🔽 Закрываем
+    modalContent.classList.remove("scale-100");
+    modalContent.classList.add("scale-95");
+
+    setTimeout(() => {
+      modal.classList.add("hidden");
+      originalParent.insertBefore(DOM.melissaProject, placeholder);
+      placeholder.remove();
 
       if (melissaCardInner) {
-        melissaCardInner.classList.remove("h-[550px]");
-        melissaCardInner.classList.add("h-full");
+        melissaCardInner.classList.remove("h-full");
+        melissaCardInner.classList.add("h-[550px]");
       }
 
-      setTimeout(() => {
-        modalContent.classList.remove("scale-95");
-        modalContent.classList.add("scale-100");
-      }, 10);
-
-      DOM.expandBtn.textContent = "Close";
-      isExpanded = true;
-
-    } else {
-      // 🔽 Закрываем
-      modalContent.classList.remove("scale-100");
-      modalContent.classList.add("scale-95");
-
-      setTimeout(() => {
-        modal.classList.add("hidden");
-        originalParent.insertBefore(DOM.melissaProject, placeholder);
-        placeholder.remove();
-
-        if (melissaCardInner) {
-          melissaCardInner.classList.remove("h-full");
-          melissaCardInner.classList.add("h-[550px]");
-        }
-
-        DOM.expandBtn.textContent = "Expand";
-        isExpanded = false;
-      }, 300);
-    }
-  });
+      icon.src = "/images/expand-icon.png";
+      icon.alt = "Expand";
+      isExpanded = false;
+    }, 300);
+  }
+});
 
   // Дополнительно — можно закрывать по фону
   DOM.modal.addEventListener("click", (e) => {
