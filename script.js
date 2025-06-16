@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
                modalContent.classList.add("scale-100");
             }, 10);
 
-            icon.src = "/ilyabinus-portfolio/images/close-icon.png";
+            icon.src = "/images/close-icon.png";
             icon.alt = "Close";
             isExpanded = true;
 
