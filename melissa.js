@@ -54,6 +54,50 @@ document.addEventListener("DOMContentLoaded", () => {
              `.trim()
    }];
 
+
+
+   document.addEventListener("DOMContentLoaded", () => {
+      const input = document.getElementById("user-input");
+      input.addEventListener("keydown", function (e) {
+         if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+         }
+      });
+   });
+
+   function scrollLatestToTop() {
+      const chatbox = document.getElementById("chatbox");
+      const latest = document.getElementById("latest-message");
+      if (!latest) return;
+
+      const isUser = latest.classList.contains("message-user");
+      const isMelissa = latest.classList.contains("message-melissa");
+
+      requestAnimationFrame(() => {
+         if (isUser) {
+            chatbox.scrollTop = latest.offsetTop;
+         } else if (isMelissa) {
+            const centerOffset = latest.offsetTop - chatbox.clientHeight / 2 + latest.offsetHeight / 2;
+            chatbox.scrollTop = centerOffset;
+         }
+
+         latest.removeAttribute("id");
+      });
+   }
+
+   function cleanOldMessages() {
+      const chatbox = document.getElementById("chatbox");
+      const messages = Array.from(chatbox.children);
+      if (messages.length > 200) { // Оставляем 200 сообщений
+         for (let i = 0; i < messages.length - 200; i++) {
+            messages[i].remove();
+         }
+      }
+   }
+
+});
+
    async function sendMessage() {
       const input = document.getElementById("user-input");
       const chatbox = document.getElementById("chatbox");
@@ -130,45 +174,3 @@ document.addEventListener("DOMContentLoaded", () => {
          cleanOldMessages();
       }
    }
-
-   document.addEventListener("DOMContentLoaded", () => {
-      const input = document.getElementById("user-input");
-      input.addEventListener("keydown", function (e) {
-         if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            sendMessage();
-         }
-      });
-   });
-
-   function scrollLatestToTop() {
-      const chatbox = document.getElementById("chatbox");
-      const latest = document.getElementById("latest-message");
-      if (!latest) return;
-
-      const isUser = latest.classList.contains("message-user");
-      const isMelissa = latest.classList.contains("message-melissa");
-
-      requestAnimationFrame(() => {
-         if (isUser) {
-            chatbox.scrollTop = latest.offsetTop;
-         } else if (isMelissa) {
-            const centerOffset = latest.offsetTop - chatbox.clientHeight / 2 + latest.offsetHeight / 2;
-            chatbox.scrollTop = centerOffset;
-         }
-
-         latest.removeAttribute("id");
-      });
-   }
-
-   function cleanOldMessages() {
-      const chatbox = document.getElementById("chatbox");
-      const messages = Array.from(chatbox.children);
-      if (messages.length > 200) { // Оставляем 200 сообщений
-         for (let i = 0; i < messages.length - 200; i++) {
-            messages[i].remove();
-         }
-      }
-   }
-
-});
