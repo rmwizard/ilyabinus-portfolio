@@ -4,32 +4,10 @@
       <link rel="icon" type="image/png" href="images/favicon.png">
       <link href="style.css" rel="stylesheet">
       <link href="assets/css/qweather-icons.css" rel="stylesheet">
+      <link rel="stylesheet" href="./dist/output.css" />
       <meta charset="utf-8">
       <meta content="width=device-width, initial-scale=1.0" name="viewport">
       <title>ilya binus.dev</title>
-      <script src="https://cdn.tailwindcss.com"></script>
-      <script>
-         tailwind.config = {
-           theme: {
-             screens: {
-               sm: "1080px",
-               md: "1280px",
-               lg: "1536px"
-             },
-             extend: {
-               colors: {
-                 dark: "#272627",
-                 light: "#f7d86a",
-                 background: "#f7f7f7",
-                 foreground: "#272627"
-               },
-               fontFamily: {
-                 sans: ["Inter", "sans-serif"]
-               }
-             }
-           }
-         };
-      </script>
       <style>
          html {
          scroll-behavior: smooth;
@@ -410,8 +388,7 @@
                         </p>
                      </div>
                      <p class="tracking-wide text-xs text-yellow-400 leading-relaxed font-normal mt-4">
-                        #JavaScript #Python #Tailwind<br>#GPT #Chatbot #AIUX #Tailwind
-                     </p>
+                        #JavaScript #Python #Tailwind<br>#GPT #Chatbot #AIUX
                      <!-- Центр: окно чата -->
                      <div id="chatbox" class="flex-1 overflow-y-auto bg-[#333] rounded text-sm px-1 py-1 mt-4 mb-4
                 space-y-2 border border-[#f7d86a] scroll-smooth">
@@ -424,12 +401,12 @@
                            placeholder="Your Message"
                            class="resize-none leading-[1.6] text-yellow-400 italic font-light text-[13px] w-full bg-[#333] border border-[#f7d86a] rounded px-3 py-3 placeholder-[#f7d86a]/60 focus:outline-none focus:ring-[#f7d86a]">
 </textarea>
-                        <div id="send-btn-wrapper" class="flex items-center gap-2 w-full">
+                        <div id="send-btn-wrapper" class="flex items-center gap-0 w-full">
                            <button onclick="sendMessage()" 
-                              class="bg-[#f7d86a] text-gray-700 px-3 py-1 rounded hover:bg-yellow-400 transition w-full">
+                              class="rounded-tl-md rounded-bl-md bg-[#f7d86a] text-gray-700 px-3 py-1 hover:bg-yellow-400 transition w-full">
                            Send Message
                            </button>
-                           <button id="expand-button" class="rounded hover:bg-yellow-400 transition flex items-center justify-center">
+                           <button id="expand-button" class="rounded-tr-md rounded-br-md bg-[#f7d86a] hover:bg-yellow-400 transition flex items-center justify-center">
                              <img id="expand-icon" src="/images/expand-icon.png" alt="Expand" class="w-10 h-9">
                            </button>
 

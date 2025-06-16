@@ -1,0 +1,27 @@
+{
+  "name": "ilyabinus-portfolio",
+  "version": "1.0.0",
+  "description": "This is a personal portfolio site powered by HTML, CSS, JS, and a bit of AI magic.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tailwindcss -i ./tailwind.css -c ./tailwind.config.js -o ./dist/output.css --minify",
+    "watch": "tailwindcss -i ./tailwind.css -c ./tailwind.config.js -o ./dist/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmwizard/ilyabinus-portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rmwizard/ilyabinus-portfolio/issues"
+  },
+  "homepage": "https://github.com/rmwizard/ilyabinus-portfolio#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.5",
+    "tailwindcss": "^3.4.3"
+  }
+}
