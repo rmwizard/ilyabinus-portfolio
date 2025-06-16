@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   melissaCardInner.classList.add("h-[550px]");
                }
 
-               icon.src = "/images/expand-icon.png";
+               icon.src = "/ilyabinus-portfolio/images/expand-icon.png";
                icon.alt = "Expand";
                isExpanded = false;
             }, 300);
