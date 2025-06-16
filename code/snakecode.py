@@ -70,7 +70,12 @@ def place_food(is_blue=False):
 
 def on_key(evt):
     global dir_x, dir_y
-    k = evt.key.lower()
+
+    key = getattr(evt, "key", None)
+    if not key:
+        return  # 🛡️ Неизвестное событие — игнорим
+
+    k = key.lower()
     if (k in ("arrowup", "w")) and dir_y != 1:
         dir_x, dir_y = 0, -1
     elif (k in ("arrowdown", "s")) and dir_y != -1:
@@ -79,6 +84,7 @@ def on_key(evt):
         dir_x, dir_y = -1, 0
     elif (k in ("arrowright", "d")) and dir_x != -1:
         dir_x, dir_y = 1, 0
+
 
 if document:
     document.addEventListener("keydown", create_proxy(on_key), False)
