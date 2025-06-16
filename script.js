@@ -35,80 +35,79 @@ document.addEventListener("DOMContentLoaded", () => {
       expandBtn: document.getElementById("expand-button")
    };
 
-// ✅ Безопасно и только если всё найдено
-if (
-  DOM.melissaProject &&
-  DOM.expandBtn &&
-  DOM.modal &&
-  DOM.modalContent
-) {
-  const originalParent = DOM.melissaProject.parentNode;
-  const placeholder = document.createElement("div");
-  placeholder.style.display = "none";
+   // ✅ Безопасно и только если всё найдено
+   if (
+      DOM.melissaProject &&
+      DOM.expandBtn &&
+      DOM.modal &&
+      DOM.modalContent
+   ) {
+      const originalParent = DOM.melissaProject.parentNode;
+      const placeholder = document.createElement("div");
+      placeholder.style.display = "none";
 
-  const melissaCardInner = [...DOM.melissaProject.querySelectorAll("div")].find(div =>
-    div.classList.contains("h-[550px]")
-  );
+      const melissaCardInner = [...DOM.melissaProject.querySelectorAll("div")].find(div =>
+         div.classList.contains("h-[550px]")
+      );
 
-  let isExpanded = false;
+      let isExpanded = false;
 
-DOM.expandBtn.addEventListener("click", () => {
-  const modal = document.getElementById("modal");
-  const modalContent = document.getElementById("modal-content");
-  const icon = document.getElementById("expand-icon");
+      DOM.expandBtn.addEventListener("click", () => {
+         const modal = document.getElementById("modal");
+         const modalContent = document.getElementById("modal-content");
+         const icon = document.getElementById("expand-icon");
 
-  if (!modal || !modalContent || !DOM.melissaProject || !icon) return;
+         if (!modal || !modalContent || !DOM.melissaProject || !icon) return;
 
-  if (!isExpanded) {
-    // 🔼 Открываем
-    originalParent.insertBefore(placeholder, DOM.melissaProject);
-    modalContent.appendChild(DOM.melissaProject);
-    modal.classList.remove("hidden");
+         if (!isExpanded) {
+            // 🔼 Открываем
+            originalParent.insertBefore(placeholder, DOM.melissaProject);
+            modalContent.appendChild(DOM.melissaProject);
+            modal.classList.remove("hidden");
 
-    if (melissaCardInner) {
-      melissaCardInner.classList.remove("h-[550px]");
-      melissaCardInner.classList.add("h-full");
-    }
+            if (melissaCardInner) {
+               melissaCardInner.classList.remove("h-[550px]");
+               melissaCardInner.classList.add("h-full");
+            }
 
-    setTimeout(() => {
-      modalContent.classList.remove("scale-95");
-      modalContent.classList.add("scale-100");
-    }, 10);
+            setTimeout(() => {
+               modalContent.classList.remove("scale-95");
+               modalContent.classList.add("scale-100");
+            }, 10);
 
-    icon.src = "/images/close-icon.png";
-    icon.alt = "Close";
-    isExpanded = true;
+            icon.src = "/images/close-icon.png";
+            icon.alt = "Close";
+            isExpanded = true;
 
-  } else {
-    // 🔽 Закрываем
-    modalContent.classList.remove("scale-100");
-    modalContent.classList.add("scale-95");
+         } else {
+            // 🔽 Закрываем
+            modalContent.classList.remove("scale-100");
+            modalContent.classList.add("scale-95");
 
-    setTimeout(() => {
-      modal.classList.add("hidden");
-      originalParent.insertBefore(DOM.melissaProject, placeholder);
-      placeholder.remove();
+            setTimeout(() => {
+               modal.classList.add("hidden");
+               originalParent.insertBefore(DOM.melissaProject, placeholder);
+               placeholder.remove();
 
-      if (melissaCardInner) {
-        melissaCardInner.classList.remove("h-full");
-        melissaCardInner.classList.add("h-[550px]");
-      }
+               if (melissaCardInner) {
+                  melissaCardInner.classList.remove("h-full");
+                  melissaCardInner.classList.add("h-[550px]");
+               }
 
-      icon.src = "/images/expand-icon.png";
-      icon.alt = "Expand";
-      isExpanded = false;
-    }, 300);
-  }
-});
+               icon.src = "/images/expand-icon.png";
+               icon.alt = "Expand";
+               isExpanded = false;
+            }, 300);
+         }
+      });
 
-  // Дополнительно — можно закрывать по фону
-  DOM.modal.addEventListener("click", (e) => {
-    if (e.target === DOM.modal && isExpanded) {
-      DOM.expandBtn.click(); // Просто "кликнуть" на ту же кнопку
-    }
-  });
-}
-
+      // Дополнительно — можно закрывать по фону
+      DOM.modal.addEventListener("click", (e) => {
+         if (e.target === DOM.modal && isExpanded) {
+            DOM.expandBtn.click(); // Просто "кликнуть" на ту же кнопку
+         }
+      });
+   }
 
 
    // === Утилиты ===
@@ -162,7 +161,14 @@ DOM.expandBtn.addEventListener("click", () => {
       }
    }
 
-   function createModal({ content, buttonId, buttonText, buttonClass, textClass, onButtonClick }) {
+   function createModal({
+      content,
+      buttonId,
+      buttonText,
+      buttonClass,
+      textClass,
+      onButtonClick
+   }) {
       const modal = document.createElement("div");
       modal.className = "fixed inset-0 z-50 flex items-center justify-center bg-black/80 text-center";
       modal.innerHTML = `
@@ -181,34 +187,34 @@ DOM.expandBtn.addEventListener("click", () => {
       return modal;
    }
 
-      async function launchGame() {
-          if (!window.pyodide) {
-              console.warn("⛔ Pyodide not loaded");
-              return;
-          }
-      
-          let retries = 20; // Увеличиваем количество попыток
-          const retryInterval = 200; // Увеличиваем интервал до 200 мс
-          while (!window.startFn && retries > 0) {
-              console.log(`⏳ Ждём появления startFn... (попытка ${21 - retries}/20)`);
-              await new Promise(res => setTimeout(res, retryInterval));
-              retries--;
-          }
-      
-          if (window.startFn) {
-              console.log("✅ startFn готова, активируем кнопку");
-              if (DOM.startBtn) {
-                  DOM.startBtn.disabled = false;
-                  DOM.startBtn.textContent = "START";
-              }
-          } else {
-              console.error("❌ startFn не появилась после ожидания");
-              if (DOM.startBtn) {
-                  DOM.startBtn.textContent = "ERROR";
-                  DOM.startBtn.disabled = true;
-              }
-          }
+   async function launchGame() {
+      if (!window.pyodide) {
+         console.warn("⛔ Pyodide not loaded");
+         return;
       }
+
+      let retries = 20; // Увеличиваем количество попыток
+      const retryInterval = 200; // Увеличиваем интервал до 200 мс
+      while (!window.startFn && retries > 0) {
+         console.log(`⏳ Ждём появления startFn... (попытка ${21 - retries}/20)`);
+         await new Promise(res => setTimeout(res, retryInterval));
+         retries--;
+      }
+
+      if (window.startFn) {
+         console.log("✅ startFn готова, активируем кнопку");
+         if (DOM.startBtn) {
+            DOM.startBtn.disabled = false;
+            DOM.startBtn.textContent = "START";
+         }
+      } else {
+         console.error("❌ startFn не появилась после ожидания");
+         if (DOM.startBtn) {
+            DOM.startBtn.textContent = "ERROR";
+            DOM.startBtn.disabled = true;
+         }
+      }
+   }
 
 
    // === burger + glow ===
@@ -228,8 +234,7 @@ DOM.expandBtn.addEventListener("click", () => {
       const tag = el.tagName.toLowerCase();
       return (
          el.nodeType === Node.ELEMENT_NODE &&
-         window.getComputedStyle(el).pointerEvents !== 'none' && 
-         ['p', 'a', 'span', 'strong', 'em', 'b', 'i', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li'].includes(tag)
+         window.getComputedStyle(el).pointerEvents !== 'none' && ['p', 'a', 'span', 'strong', 'em', 'b', 'i', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li'].includes(tag)
       );
    }
 
@@ -342,15 +347,21 @@ DOM.expandBtn.addEventListener("click", () => {
 
    navigator.geolocation.getCurrentPosition(
       async position => {
-         const { latitude, longitude } = position.coords;
-         console.log("Geolocation success:", { latitude, longitude });
-         await fetchWeather(latitude, longitude);
-      },
-      async error => {
-         console.error("Geolocation error:", error.message);
-         console.log("Falling back to Haifa");
-         await fetchWeather(null, null, "Haifa");
-      }
+            const {
+               latitude,
+               longitude
+            } = position.coords;
+            console.log("Geolocation success:", {
+               latitude,
+               longitude
+            });
+            await fetchWeather(latitude, longitude);
+         },
+         async error => {
+            console.error("Geolocation error:", error.message);
+            console.log("Falling back to Haifa");
+            await fetchWeather(null, null, "Haifa");
+         }
    );
 
    async function fetchWeather(lat = null, lon = null, city = null) {
@@ -444,7 +455,7 @@ DOM.expandBtn.addEventListener("click", () => {
    DOM.passwordSlider.addEventListener('input', () => DOM.passwordLength.value = DOM.passwordSlider.value);
    DOM.passwordLength.addEventListener('input', () => DOM.passwordSlider.value = DOM.passwordLength.value);
 
-   window.generatePassword = function() {
+   window.generatePassword = function () {
       const length = +DOM.passwordLength.value;
       const upper = document.getElementById('upper').checked;
       const lower = document.getElementById('lower').checked;
@@ -470,7 +481,7 @@ DOM.expandBtn.addEventListener("click", () => {
       DOM.passwordOutput.textContent = password;
    };
 
-   window.copyPassword = function() {
+   window.copyPassword = function () {
       navigator.clipboard.writeText(DOM.passwordOutput.textContent).then(() => {
          alert('Password copied to clipboard!');
       });
@@ -478,7 +489,7 @@ DOM.expandBtn.addEventListener("click", () => {
 
    // === contact form handling ===
    if (DOM.contactForm) {
-      DOM.contactForm.addEventListener('submit', function(e) {
+      DOM.contactForm.addEventListener('submit', function (e) {
          e.preventDefault();
          emailjs.sendForm('service_iqyx8v5', 'template_fa6a58b', this, 'Dcqqxk4oL6reqG_Zr')
             .then(() => {
@@ -513,59 +524,57 @@ DOM.expandBtn.addEventListener("click", () => {
       });
       window.pyodide = py;
 
-   
+
       let isReady = false; // 🧠 Флаг готовности
-      
+
       // 🐍 Загрузка и запуск Python-кода
       const code = await (await fetch(
-        "https://raw.githubusercontent.com/rmwizard/ilyabinus-portfolio/main/code/snakecode.py?ts=" + Date.now()
+         "https://raw.githubusercontent.com/rmwizard/ilyabinus-portfolio/main/code/snakecode.py?ts=" + Date.now()
       )).text();
-      
+
       console.log("🐍 Загруженный код:\n", code);
-      
+
       await py.runPythonAsync(code);
-      
+
 
       console.log("🔍 Пробуем получить startFn из Python...");
       const startFn = py.globals.get("start");
-      
+
       if (startFn) {
-        window.startFn = startFn;
-        isReady = true; // ✅ Устанавливаем флаг готовности
-        console.log("✅ Snake startFn готова.");
-      
-        if (DOM.startBtn) {
-          DOM.startBtn.disabled = false;
-      
-          let firstClick = true;
-      
-          DOM.startBtn.addEventListener("click", async () => {
-            if (!window.startFn) {
-              console.warn("⏳ Игра ещё не готова — подожди секунду.");
-              return;
-            }
-      
-            if (firstClick) {
-              console.log("🎮 Первый клик — двойной запуск");
-      
-              await window.startGame();
-      
-              setTimeout(() => {
-                window.startGame();
-              }, 50);
-      
-              firstClick = false;
-            } else {
-              console.log("🎮 Обычный клик");
-              await window.startGame();
-            }
-          });
-        }
+         window.startFn = startFn;
+         isReady = true; // ✅ Устанавливаем флаг готовности
+         console.log("✅ Snake startFn готова.");
+
+         if (DOM.startBtn) {
+            DOM.startBtn.disabled = false;
+
+            let firstClick = true;
+
+            DOM.startBtn.addEventListener("click", async () => {
+               if (!window.startFn) {
+                  console.warn("⏳ Игра ещё не готова — подожди секунду.");
+                  return;
+               }
+
+               if (firstClick) {
+                  console.log("🎮 Первый клик — двойной запуск");
+
+                  await window.startGame();
+
+                  setTimeout(() => {
+                     window.startGame();
+                  }, 50);
+
+                  firstClick = false;
+               } else {
+                  console.log("🎮 Обычный клик");
+                  await window.startGame();
+               }
+            });
+         }
       } else {
-        console.warn("⛔ 'start' function not found in Python globals.");
+         console.warn("⛔ 'start' function not found in Python globals.");
       }
-
-
 
 
       // Full-screen helper
@@ -583,7 +592,7 @@ DOM.expandBtn.addEventListener("click", () => {
             document.body.appendChild(wrap);
          } else {
             window.open(url, "snakeFull",
-                        "width=800,height=600,menubar=no,location=no");
+               "width=800,height=600,menubar=no,location=no");
          }
       };
    })();
@@ -629,118 +638,115 @@ DOM.expandBtn.addEventListener("click", () => {
       }
    });
 
-      window.startGame = async () => {
-          const btn = DOM.startBtn;
-          if (!btn) {
-              console.error("❌ startBtn не найден");
-              return;
-          }
-      
-          if (!window.startFn) {
-              console.warn("⚠️ Игра ещё не готова, пожалуйста, подождите.");
-              return;
-          }
-      
-          const isStarting = btn.textContent === "START";
-      
-          if (isStarting) {
-              btn.textContent = "STOP";
-              btn.disabled = true; // Отключаем кнопку на время запуска
-              playSound(DOM.bgMusic, "🎧 Автозапуск заблокирован:");
-              hideStartScreen();
-              clearCanvas();
-      
-              try {
-                  console.log("🔍 Вызываем startFn...");
-                  await window.startFn();
-                  console.log("✅ startFn выполнена успешно");
-                  btn.disabled = false; // Включаем кнопку после успешного запуска
-              } catch (err) {
-                  console.error("🔥 Ошибка запуска:", err);
-                  btn.textContent = "START";
-                  btn.disabled = false;
+   window.startGame = async () => {
+      const btn = DOM.startBtn;
+      if (!btn) {
+         console.error("❌ startBtn не найден");
+         return;
+      }
+
+      if (!window.startFn) {
+         console.warn("⚠️ Игра ещё не готова, пожалуйста, подождите.");
+         return;
+      }
+
+      const isStarting = btn.textContent === "START";
+
+      if (isStarting) {
+         btn.textContent = "STOP";
+         btn.disabled = true; // Отключаем кнопку на время запуска
+         playSound(DOM.bgMusic, "🎧 Автозапуск заблокирован:");
+         hideStartScreen();
+         clearCanvas();
+
+         try {
+            console.log("🔍 Вызываем startFn...");
+            await window.startFn();
+            console.log("✅ startFn выполнена успешно");
+            btn.disabled = false; // Включаем кнопку после успешного запуска
+         } catch (err) {
+            console.error("🔥 Ошибка запуска:", err);
+            btn.textContent = "START";
+            btn.disabled = false;
+            resetStartScreen();
+            createModal({
+               content: "❌ Не удалось запустить игру. Попробуйте снова.",
+               buttonId: "retryBtn",
+               buttonText: "OK",
+               buttonClass: "bg-red-500 text-white hover:bg-red-400",
+               textClass: "text-red-400",
+               onButtonClick: () => {
                   resetStartScreen();
-                  createModal({
-                      content: "❌ Не удалось запустить игру. Попробуйте снова.",
-                      buttonId: "retryBtn",
-                      buttonText: "OK",
-                      buttonClass: "bg-red-500 text-white hover:bg-red-400",
-                      textClass: "text-red-400",
-                      onButtonClick: () => {
-                          resetStartScreen();
-                          resetDigits();
-                          clearCanvas();
-                      }
-                  });
-              }
-          } else {
-              btn.textContent = "START";
-              btn.disabled = true;
-              stopSound(DOM.bgMusic);
-      
-              try {
-                  await window.pyodide.runPythonAsync("stop()");
-                  console.log("✅ stop() выполнен успешно");
-                  btn.disabled = false;
-              } catch (err) {
-                  console.error("❌ Ошибка при вызове stop():", err);
-                  btn.disabled = false;
-              }
-          }
-      };
+                  resetDigits();
+                  clearCanvas();
+               }
+            });
+         }
+      } else {
+         btn.textContent = "START";
+         btn.disabled = true;
+         stopSound(DOM.bgMusic);
+
+         try {
+            await window.pyodide.runPythonAsync("stop()");
+            console.log("✅ stop() выполнен успешно");
+            btn.disabled = false;
+         } catch (err) {
+            console.error("❌ Ошибка при вызове stop():", err);
+            btn.disabled = false;
+         }
+      }
+   };
 
 
+   window.gameOver = function () {
+      console.log("📛 Вызвана window.gameOver()");
+      stopSound(DOM.bgMusic);
+      playSound(DOM.failSound, "💀 Ошибка звука поражения:");
 
-
-window.gameOver = function() {
-    console.log("📛 Вызвана window.gameOver()");
-    stopSound(DOM.bgMusic);
-    playSound(DOM.failSound, "💀 Ошибка звука поражения:");
-
-    createModal({
-        content: "💥 Oops! You hit a bomb.",
-        buttonId: "retryBtn",
-        buttonText: "Try Again",
-        buttonClass: "bg-red-500 text-white hover:bg-red-400",
-        textClass: "text-red-400",
-        onButtonClick: () => {
+      createModal({
+         content: "💥 Oops! You hit a bomb.",
+         buttonId: "retryBtn",
+         buttonText: "Try Again",
+         buttonClass: "bg-red-500 text-white hover:bg-red-400",
+         textClass: "text-red-400",
+         onButtonClick: () => {
             resetStartScreen();
             resetDigits();
             clearCanvas();
             if (DOM.startBtn) {
-                DOM.startBtn.disabled = false;
-                DOM.startBtn.textContent = "START";
+               DOM.startBtn.disabled = false;
+               DOM.startBtn.textContent = "START";
             }
-        }
-    }); // ✅ Закрываем createModal
-}; // ✅ Закрываем window.gameOver
+         }
+      }); // ✅ Закрываем createModal
+   }; // ✅ Закрываем window.gameOver
 
 
-window.unlockCallback = function() {
-    console.log("🏁 Победа!");
-    stopSound(DOM.bgMusic);
-    playSound(DOM.victorySound, "🎺 Ошибка тадама:");
-    createModal({
-        content: "🎉<br>Number Unlocked!<br>052-3961348",
-        buttonId: "okBtn",
-        buttonText: "OK",
-        buttonClass: "bg-[#f7d86a] text-black hover:bg-yellow-400",
-        textClass: "text-[#f7d86a]",
-        onButtonClick: () => {
+   window.unlockCallback = function () {
+      console.log("🏁 Победа!");
+      stopSound(DOM.bgMusic);
+      playSound(DOM.victorySound, "🎺 Ошибка тадама:");
+      createModal({
+         content: "🎉<br>Number Unlocked!<br>052-3961348",
+         buttonId: "okBtn",
+         buttonText: "OK",
+         buttonClass: "bg-[#f7d86a] text-black hover:bg-yellow-400",
+         textClass: "text-[#f7d86a]",
+         onButtonClick: () => {
             resetStartScreen();
             resetDigits();
             clearCanvas();
             if (DOM.startBtn) {
-                DOM.startBtn.disabled = false;
-                DOM.startBtn.textContent = "START";
+               DOM.startBtn.disabled = false;
+               DOM.startBtn.textContent = "START";
             }
-        }
-    }); // ← Закрываем createModal правильно тут
-};
+         }
+      }); // ← Закрываем createModal правильно тут
+   };
 
 
-
-   window.failCallback = function() {
+   window.failCallback = function () {
       console.log("💥 Поражение!");
       stopSound(DOM.bgMusic);
       playSound(DOM.failSound, "💀 Ошибка звука поражения:");
@@ -748,13 +754,15 @@ window.unlockCallback = function() {
    };
 
 
-   window.playEatSound = function() {
+   window.playEatSound = function () {
       console.log("🍏 playEatSound вызвана!");
       playSound(document.getElementById("eat-sound"), "🍽️ Звук еды не воспроизвёлся:");
    };
 
-   window.sendKey = function(key) {
-      const evt = new KeyboardEvent("keydown", { key });
+   window.sendKey = function (key) {
+      const evt = new KeyboardEvent("keydown", {
+         key
+      });
       document.dispatchEvent(evt);
       if (navigator.vibrate) navigator.vibrate(50);
    };
@@ -900,6 +908,7 @@ function handleImageUpload(event) {
    };
    reader.readAsDataURL(file);
 }
+
 function showExportPreview() {
    const palette = getCurrentPalette();
    const container = document.getElementById("palette-preview");
@@ -975,15 +984,15 @@ function getCurrentPalette() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const chatbox = document.getElementById("chatbox");
-  if (!chatbox) {
-    console.warn("❌ chatbox не найден!");
-    return;
-  }
+   const chatbox = document.getElementById("chatbox");
+   if (!chatbox) {
+      console.warn("❌ chatbox не найден!");
+      return;
+   }
 
-  const msg2 = document.createElement("div");
-  msg2.className = "message-melissa flex justify-start";
-  msg2.innerHTML = `
+   const msg2 = document.createElement("div");
+   msg2.className = "message-melissa flex justify-start";
+   msg2.innerHTML = `
     <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 py-1 mt-2 ml-4 max-w-[75%] text-left">
       <span class="text-pink-400 font-semibold">Melissa:</span><br>
       Hello there!<br>
@@ -996,80 +1005,76 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   `;
 
-  chatbox.appendChild(msg2);
-  chatbox.scrollTop = chatbox.scrollHeight;
-});   
-   
+   chatbox.appendChild(msg2);
+   chatbox.scrollTop = chatbox.scrollHeight;
+});
+
 
 const input = document.getElementById("user-input");
 
 if (input) {
-  input.addEventListener("focus", () => {
-    if (window.innerWidth <= 768) {
-      const melissa = document.getElementById("melissa-project");
-      if (melissa) {
-        const rect = melissa.getBoundingClientRect();
-        const scrollTop = window.scrollY || window.pageYOffset;
-        const offsetTop = rect.top + scrollTop;
+   input.addEventListener("focus", () => {
+      if (window.innerWidth <= 768) {
+         const melissa = document.getElementById("melissa-project");
+         if (melissa) {
+            const rect = melissa.getBoundingClientRect();
+            const scrollTop = window.scrollY || window.pageYOffset;
+            const offsetTop = rect.top + scrollTop;
 
-        const customOffset = 180; // ⬅️ отступ от верха
-        window.scrollTo({
-          top: offsetTop - customOffset,
-          behavior: "smooth"
-        });
+            const customOffset = 180; // ⬅️ отступ от верха
+            window.scrollTo({
+               top: offsetTop - customOffset,
+               behavior: "smooth"
+            });
+         }
       }
-    }
-  });
+   });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const burgerBtn = document.getElementById("burger-btn");
-  const navMenu = document.getElementById("nav-menu");
-  const aboutWrapper = document.getElementById("about-wrapper");
+   const burgerBtn = document.getElementById("burger-btn");
+   const navMenu = document.getElementById("nav-menu");
+   const aboutWrapper = document.getElementById("about-wrapper");
 
-  let isOpen = false;
+   let isOpen = false;
 
-  burgerBtn.addEventListener("click", () => {
-    isOpen = !isOpen;
+   burgerBtn.addEventListener("click", () => {
+      isOpen = !isOpen;
 
-    if (isOpen) {
-      navMenu.classList.remove("hidden");
+      if (isOpen) {
+         navMenu.classList.remove("hidden");
 
-      // 💫 Плавное появление меню
-      setTimeout(() => {
-        navMenu.classList.remove("opacity-0", "scale-y-0");
-        navMenu.classList.add("opacity-100", "scale-y-100");
-      }, 10);
+         // 💫 Плавное появление меню
+         setTimeout(() => {
+            navMenu.classList.remove("opacity-0", "scale-y-0");
+            navMenu.classList.add("opacity-100", "scale-y-100");
+         }, 10);
 
-      // 📱 Только на мобиле добавляем отступ
-      if (window.innerWidth < 640) {
-        aboutWrapper.classList.add("mt-[80px]");
+         // 📱 Только на мобиле добавляем отступ
+         if (window.innerWidth < 640) {
+            aboutWrapper.classList.add("mt-[80px]");
+         }
+
+      } else {
+         navMenu.classList.remove("opacity-100", "scale-y-100");
+         navMenu.classList.add("opacity-0", "scale-y-0");
+
+         // 💫 Плавное скрытие и скрываем через 300ms
+         setTimeout(() => {
+            navMenu.classList.add("hidden");
+         }, 300);
+
+         // 📱 Убираем отступ только на мобиле
+         if (window.innerWidth < 640) {
+            aboutWrapper.classList.remove("mt-[80px]");
+         }
       }
-
-    } else {
-      navMenu.classList.remove("opacity-100", "scale-y-100");
-      navMenu.classList.add("opacity-0", "scale-y-0");
-
-      // 💫 Плавное скрытие и скрываем через 300ms
-      setTimeout(() => {
-        navMenu.classList.add("hidden");
-      }, 300);
-
-      // 📱 Убираем отступ только на мобиле
-      if (window.innerWidth < 640) {
-        aboutWrapper.classList.remove("mt-[80px]");
-      }
-    }
-  });
+   });
 });
 
-  const melissaSection = document.getElementById("melissa-project");
-  const modal = document.getElementById("modal");
-  const modalContent = document.getElementById("modal-content");
-
-
-
-
+const melissaSection = document.getElementById("melissa-project");
+const modal = document.getElementById("modal");
+const modalContent = document.getElementById("modal-content");
 
 
 window.js = window.js || {};
