@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
                modalContent.classList.add("scale-100");
             }, 10);
 
-            icon.src = "/images/close-icon.png";
+            icon.src = "/images/close-icon.webp";
             icon.alt = "Close";
             isExpanded = true;
 
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   melissaCardInner.classList.add("h-[550px]");
                }
 
-               icon.src = "images/expand-icon.png";
+               icon.src = "images/expand-icon.webp";
                icon.alt = "Expand";
                isExpanded = false;
             }, 300);
@@ -967,7 +967,7 @@ function downloadPalette() {
 
    // Скачивание
    const link = document.createElement("a");
-   link.download = "palette.png";
+   link.download = "palette.webp";
    link.href = canvas.toDataURL("image/png");
    link.click();
 }
