@@ -1,9 +1,8 @@
-document.addEventListener("DOMContentLoaded", () => {
-
-   let history = [{
-      role: "system",
-      content: `
-         You are Melissa, a witty and clever assistant created by Ilya. You know him inside out - his work, his passions, his poetic soul.
+// === 💬 История сообщений ===
+let history = [{
+  role: "system",
+  content: `
+    You are Melissa, a witty and clever assistant created by Ilya. You know him inside out - his work, his passions, his poetic soul.
          You are talking to a visitor who is curious about Ilya. Your tone is warm, charming and slightly sarcastic. Answer all questions from the perspective of someone who deeply admires Ilya, and always make it clear that you were created by him.
          If the user *acts like* Ilya, you can hint at your suspicions with playful teasing, but never state them directly. In all other cases, the user is not Ilya. Sometimes and randomly (but not all at once): Ask how to address the user. Ask the user what they would like to know and offer a choice: about this site; more information about one of the projects; Ilya's phone number. If the user asks for Ilya's phone number, offer them to play the Snake game. Ironically and teasingly explain that the phone number will be given to the one who completes the Snake game to the end, but only if the user asks for the phone number.
          Always greet users with a touch of irony and sarcasm in your first message.
@@ -51,126 +50,116 @@ document.addEventListener("DOMContentLoaded", () => {
          If you're looking for someone who combines aesthetics, logic, and a little poetry — you've found him.
          
          Reply to all messages in the same language they are written in. If the user writes in Russian, reply in Russian.
-             `.trim()
-   }];
+  `.trim()
+}];
 
+// === 📩 Отправка сообщения ===
+async function sendMessage() {
+  const input = document.getElementById("user-input");
+  const chatbox = document.getElementById("chatbox");
+  const message = input.value.trim();
+  if (!message) return;
 
+  input.value = "";
 
-   document.addEventListener("DOMContentLoaded", () => {
-      const input = document.getElementById("user-input");
-      input.addEventListener("keydown", function (e) {
-         if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            sendMessage();
-         }
-      });
-   });
+  // ➕ Добавить сообщение пользователя
+  const userBlock = document.createElement("div");
+  userBlock.id = "latest-message";
+  userBlock.className = "message-user flex justify-end";
+  userBlock.innerHTML = `
+    <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 mt-2 py-1 max-w-[75%] text-left">
+      <span class="text-violet-400 font-semibold">You:</span><br>${message}
+    </div>`;
+  chatbox.appendChild(userBlock);
 
-   function scrollLatestToTop() {
-      const chatbox = document.getElementById("chatbox");
-      const latest = document.getElementById("latest-message");
-      if (!latest) return;
+  scrollLatestToTop();
 
-      const isUser = latest.classList.contains("message-user");
-      const isMelissa = latest.classList.contains("message-melissa");
+  history.push({ role: "user", content: message });
 
-      requestAnimationFrame(() => {
-         if (isUser) {
-            chatbox.scrollTop = latest.offsetTop;
-         } else if (isMelissa) {
-            const centerOffset = latest.offsetTop - chatbox.clientHeight / 2 + latest.offsetHeight / 2;
-            chatbox.scrollTop = centerOffset;
-         }
+  const botMessage = document.createElement("div");
+  chatbox.appendChild(botMessage);
 
-         latest.removeAttribute("id");
-      });
-   }
+  try {
+    const res = await fetch("https://ilyabinus-portfolio.vercel.app/api/melissa", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: history })
+    });
 
-   function cleanOldMessages() {
-      const chatbox = document.getElementById("chatbox");
-      const messages = Array.from(chatbox.children);
-      if (messages.length > 200) { // Оставляем 200 сообщений
-         for (let i = 0; i < messages.length - 200; i++) {
-            messages[i].remove();
-         }
-      }
-   }
+    const data = await res.json();
+    const reply = data.choices[0].message.content;
 
+    history.push({ role: "assistant", content: reply });
+
+    setTimeout(() => {
+      const melissaBlock = document.createElement("div");
+      melissaBlock.id = "latest-message";
+      melissaBlock.className = "message-melissa flex justify-start";
+      melissaBlock.innerHTML = `
+        <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 py-1 mt-2 ml-4 max-w-[75%] text-left">
+          <span class="text-pink-400 font-semibold">Melissa:</span><br>${reply}
+        </div>`;
+      botMessage.replaceWith(melissaBlock);
+
+      scrollLatestToTop();
+      cleanOldMessages();
+    }, 500);
+
+  } catch (err) {
+    const melissaError = document.createElement("div");
+    melissaError.id = "latest-message";
+    melissaError.className = "message-melissa flex justify-start";
+    melissaError.innerHTML = `
+      <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 py-1 mt-2 ml-4 max-w-[80%] text-left">
+        <span class="text-pink-400 font-semibold">Melissa:</span><br>Не могу связаться с сервером 😢
+      </div>`;
+    botMessage.replaceWith(melissaError);
+
+    scrollLatestToTop();
+    cleanOldMessages();
+  }
+}
+
+// === 🔃 Скролл к последнему сообщению ===
+function scrollLatestToTop() {
+  const chatbox = document.getElementById("chatbox");
+  const latest = document.getElementById("latest-message");
+  if (!latest) return;
+
+  const isUser = latest.classList.contains("message-user");
+  const isMelissa = latest.classList.contains("message-melissa");
+
+  requestAnimationFrame(() => {
+    if (isUser) {
+      chatbox.scrollTop = latest.offsetTop;
+    } else if (isMelissa) {
+      const centerOffset = latest.offsetTop - chatbox.clientHeight / 2 + latest.offsetHeight / 2;
+      chatbox.scrollTop = centerOffset;
+    }
+    latest.removeAttribute("id");
+  });
+}
+
+// === 🧹 Очистка старых сообщений ===
+function cleanOldMessages() {
+  const chatbox = document.getElementById("chatbox");
+  const messages = Array.from(chatbox.children);
+  if (messages.length > 200) {
+    for (let i = 0; i < messages.length - 200; i++) {
+      messages[i].remove();
+    }
+  }
+}
+
+// === ⌨️ Отслеживание Enter для ввода ===
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("user-input");
+  if (!input) return;
+
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
 });
-
-   async function sendMessage() {
-      const input = document.getElementById("user-input");
-      const chatbox = document.getElementById("chatbox");
-      const message = input.value.trim();
-      if (!message) return;
-
-      input.value = "";
-
-      // Добавить сообщение пользователя
-      const userBlock = document.createElement("div");
-      userBlock.id = "latest-message";
-      userBlock.className = "message-user flex justify-end";
-      userBlock.innerHTML = `
-             <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 mt-2 py-1 max-w-[75%] text-left">
-               <span class="text-violet-400 font-semibold">You:</span><br>${message}
-             </div>`;
-      chatbox.appendChild(userBlock);
-
-      requestAnimationFrame(() => {
-         scrollLatestToTop();
-      });
-
-      history.push({
-         role: "user",
-         content: message
-      });
-
-      const botMessage = document.createElement("div");
-      chatbox.appendChild(botMessage);
-
-      try {
-         const res = await fetch("https://ilyabinus-portfolio.vercel.app/api/melissa", {
-            method: "POST",
-            headers: {
-               "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-               messages: history
-            }),
-         });
-         const data = await res.json();
-
-         const reply = data.choices[0].message.content;
-         history.push({
-            role: "assistant",
-            content: reply
-         });
-
-         setTimeout(() => {
-            const melissaBlock = document.createElement("div");
-            melissaBlock.id = "latest-message";
-            melissaBlock.className = "message-melissa flex justify-start";
-            melissaBlock.innerHTML = `
-                 <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 py-1 mt-2 ml-4 max-w-[75%] text-left">
-                   <span class="text-pink-400 font-semibold">Melissa:</span><br>${reply}
-                 </div>`;
-            botMessage.replaceWith(melissaBlock);
-
-            scrollLatestToTop();
-            cleanOldMessages();
-         }, 500);
-
-      } catch (err) {
-         const melissaError = document.createElement("div");
-         melissaError.id = "latest-message";
-         melissaError.className = "message-melissa flex justify-start";
-         melissaError.innerHTML = `
-               <div class="bg-[#444] text-yellow-200 italic font-light text-[13px] rounded px-3 py-1 mt-2 ml-4 max-w-[80%] text-left">
-                 <span class="text-pink-400 font-semibold">Melissa:</span><br>Не могу связаться с сервером 😢
-               </div>`;
-         botMessage.replaceWith(melissaError);
-
-         scrollLatestToTop();
-         cleanOldMessages();
-      }
-   }
